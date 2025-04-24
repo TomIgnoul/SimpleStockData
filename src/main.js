@@ -1,24 +1,34 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+"use strict";
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+// in deze code halen we de API key van alphavantage
 
-setupCounter(document.querySelector('#counter'))
+var request = require("node-fetch");
+
+const apiKey = "OUHQGMU8N0KTHTEB";
+const symbol = "IBM";
+const TimeSeriesIntradayAPI = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${apiKey}`;
+
+//TIME_SERIES_INTRADAY-API
+
+async function haalDataOp(symbol = "IBM", interval = "5min") {
+  const TimeSeriesIntradayAPI = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${interval}&apikey=${apiKey}`;
+
+  try {
+    const response = await fetch(TimeSeriesIntradayAPI);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    //
+    console.log(`volledige data voor ${symbol}:`, data);
+    return data;
+  } catch (error) {
+    console.error("Fout bij ophalen van data:", error);
+  }
+}
+
+// Functie aanroepen
+haalDataOp();
+//haalDataOp('AAPL', '15min'); // 15 minuten
