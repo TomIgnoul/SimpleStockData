@@ -2,15 +2,13 @@
 
 // in deze code halen we de API key van alphavantage
 
-var request = require("node-fetch");
-
 const apiKey = "OUHQGMU8N0KTHTEB";
 const symbol = "IBM";
 const TimeSeriesIntradayAPI = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${apiKey}`;
 
 //TIME_SERIES_INTRADAY-API
 
-async function haalDataOp(symbol = "IBM", interval = "5min") {
+export async function fetchIntradayData(symbol = "IBM", interval = "5min") {
   const TimeSeriesIntradayAPI = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${interval}&apikey=${apiKey}`;
 
   try {
@@ -21,14 +19,9 @@ async function haalDataOp(symbol = "IBM", interval = "5min") {
 
     const data = await response.json();
 
-    //
     console.log(`volledige data voor ${symbol}:`, data);
     return data;
   } catch (error) {
     console.error("Fout bij ophalen van data:", error);
   }
 }
-
-// Functie aanroepen
-haalDataOp();
-//haalDataOp('AAPL', '15min'); // 15 minuten

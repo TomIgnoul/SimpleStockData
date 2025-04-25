@@ -1,3 +1,5 @@
 "use strict";
 
-import { haalDataOp } from "/api/api.js";
+import { fetchIntradayData } from "../api/intradayAPI.js";
+
+fetchIntradayData("AAPL", "15min");
