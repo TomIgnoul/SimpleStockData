@@ -19,6 +19,18 @@ export async function fetchIntradayData(symbol = "IBM", interval = "5min") {
 
     const data = await response.json();
 
+    const key = `Time Series ${interval}`;
+    if (!data[key]) {
+      console.warn(
+        `Geen geldige data gevonden voor ${symbol} met interval ${itnerval}.`
+      );
+      return { [key]: {} };
+    }
+
+    if (data["Error Message"] || data["Note"]) {
+      throw new Error("API-fout: " + (data["Error Message"] || data["Note"]));
+    }
+
     console.log(`volledige data voor ${symbol}:`, data);
     return data;
   } catch (error) {
