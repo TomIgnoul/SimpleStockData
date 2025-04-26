@@ -19,10 +19,10 @@ export async function fetchIntradayData(symbol = "IBM", interval = "5min") {
 
     const data = await response.json();
 
-    const key = `Time Series ${interval}`;
+    const key = `Time Series (${interval})`;
     if (!data[key]) {
       console.warn(
-        `Geen geldige data gevonden voor ${symbol} met interval ${itnerval}.`
+        `Geen geldige data gevonden voor ${symbol} met interval ${interval}.`
       );
       return { [key]: {} };
     }
