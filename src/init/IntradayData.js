@@ -5,6 +5,8 @@ import { validateParams } from "../utils/validateParams.js";
 
 async function initIntradayData(ticker = "AAPL", interval = "30min") {
   try {
+    validateParams(ticker, interval);
+
     const intradayData = await fetchIntradayData(ticker, interval);
     const rows = transformIntradayData(intradayData, interval);
     console.log(rows);
