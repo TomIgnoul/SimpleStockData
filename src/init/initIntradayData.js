@@ -4,7 +4,7 @@ import { renderChart } from "../utils/renderChart.js";
 import { transformIntradayData } from "../utils/transformIntradayData.js";
 import { validateParams } from "../utils/validateParams.js";
 
-async function initIntradayData(ticker = "AAPL", interval = "30min") {
+export async function initIntradayData(ticker = "AAPL", interval = "30min") {
   try {
     validateParams(ticker, interval);
 
