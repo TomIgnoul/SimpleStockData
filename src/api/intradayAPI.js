@@ -1,8 +1,8 @@
 "use strict";
-
+import { apiKey } from "./constants";
 // in deze code halen we de API key van alphavantage
 
-const apiKey = "OUHQGMU8N0KTHTEB";
+
 
 //TIME_SERIES_INTRADAY-API
 

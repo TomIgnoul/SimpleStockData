@@ -1,7 +1,8 @@
 "use strict";
+import { apiKey } from "./constants";
 
 export async function searchSymbol(keyword) {
-  const apiKey = "OUHQGMU8N0KTHTEB";
+  // const apiKey = "OUHQGMU8N0KTHTEB";
   const url = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${encodeURIComponent(
     keyword
   )}&apikey=${apiKey}`;
