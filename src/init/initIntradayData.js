@@ -9,7 +9,8 @@ async function initIntradayData(ticker = "AAPL", interval = "30min") {
 
     const intradayData = await fetchIntradayData(ticker, interval);
     const rows = transformIntradayData(intradayData, interval);
-    console.log(rows);
+    console.log(rows); //<<****
+    return rows;
   } catch (error) {
     console.error("Initialisatie intraday data is mislukt:", error);
   }
