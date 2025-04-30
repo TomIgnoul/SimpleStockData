@@ -2,7 +2,7 @@
 
 import { fetchIntradayData } from "../api/intradayAPI.js";
 
-function transformIntradayData(intradayData, interval) {
+export function transformIntradayData(intradayData, interval) {
   const seriesKey = `Time Series (${interval})`;
   const raw = intradayData[seriesKey];
   if (!raw) {
