@@ -1,8 +1,9 @@
 "use strict";
-import { fetchIntradayData } from "../api/intradayAPI.js";
+
 import { renderChart } from "../utils/renderChart.js";
 import { StockRepository } from "../api/stockRepository.js";
 import { validateParams } from "../utils/validateParams.js";
+import { transformIntradayData } from "../utils/transformIntradayData.js";
 
 export async function initIntradayData(ticker = "AAPL", interval = "30min") {
   try {
