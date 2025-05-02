@@ -5,7 +5,7 @@ import { StockRepository } from "../api/stockRepository.js";
 import { validateParams } from "../utils/validateParams.js";
 import { transformIntradayData } from "../utils/transformIntradayData.js";
 
-export async function initIntradayData(ticker = "AAPL", interval = "30min") {
+export async function intradayData(ticker = "AAPL", interval = "30min") {
   try {
     validateParams(ticker, interval);
 
