@@ -7,8 +7,18 @@
     <title>StockData</title>
   </head>
   <body>
-    <button id="switchChart">Switch chart</button>
-    <canvas id="myChart" width="600" height="400"></canvas>
     <script type="module" src="/src/main/main.js"></script>
+
+    <div>
+      <canvas id="myChart" width="600" height="400"></canvas>
+      <input
+        type="range"
+        min="1"
+        max="4"
+        value="2"
+        class="slider"
+        id="slider"
+      />
+    </div>
   </body>
 </html>
