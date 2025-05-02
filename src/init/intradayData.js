@@ -20,6 +20,3 @@ export async function intradayData(ticker = "AAPL", interval = "30min") {
     console.error("Initialisatie intraday data is mislukt:", error);
   }
 }
-
-
-

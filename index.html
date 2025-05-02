@@ -7,10 +7,11 @@
     <title>StockData</title>
   </head>
   <body>
-    <script type="module" src="/src/main/main.js"></script>
-
     <div>
       <canvas id="myChart" width="600" height="400"></canvas>
+      <input type="text" value="AAPL" id="tickerTextBox" /><button
+        id="btntickerTextBox"
+      ></button>
       <input
         type="range"
         min="1"
@@ -20,5 +21,6 @@
         id="slider"
       />
     </div>
+    <script type="module" src="/src/main/main.js"></script>
   </body>
 </html>

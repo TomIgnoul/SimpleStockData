@@ -7,15 +7,25 @@ import { searchSymbol } from "../api/searchSymbolAPI.js";
 
 
 
-searchSymbol("tesla").then((resultaten) => {
-  console.log(resultaten);
-});
+
 const stringValues = ["1min", "5min", "15min", "30min", "60min"];
 const slider = document.getElementById("slider");
-const output = document.getElementById("slider-value");
+
+
+const textBoxValue = document.getElementById("tickerTextBox");
+
+const btnTextBox = document.getElementById("btntickerTextBox")
+
 intradayData("AAPL", stringValues[slider.value]);
 slider.addEventListener("input", () => {
   console.log(stringValues[slider.value]);
-  intradayData("AAPL", stringValues[slider.value]);
+  intradayData(textBoxValue.value, stringValues[slider.value]);
 });
 
+
+btnTextBox.addEventListener("click", ()=>{
+  console.log(textBoxValue.value)
+  searchSymbol(textBoxValue.value).then((resultaten) => {
+    console.log(resultaten);
+  });
+})
