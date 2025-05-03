@@ -9,9 +9,11 @@
   <body>
     <div>
       <canvas id="chartCanvas" width="600" height="400"></canvas>
-      <input type="text" value="AAPL" id="tickerTextBox" />Search<button
+      <input type="text" value="AAPL" id="tickerTextBox" /><button
         id="btntickerTextBox"
-      ></button>
+      >
+        Search
+      </button>
       <input
         type="range"
         min="1"
@@ -21,6 +23,8 @@
         id="slider"
       />
     </div>
+    <button id="addFavoriteButton">Add to favorite</button>
+    <ul id="favoritesList"></ul>
     <script type="module" src="/src/main/main.js"></script>
   </body>
 </html>
