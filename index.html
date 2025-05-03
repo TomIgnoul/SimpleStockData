@@ -14,14 +14,35 @@
       >
         Search
       </button>
-      <input
-        type="range"
-        min="1"
-        max="4"
-        value="2"
-        class="slider"
-        id="slider"
-      />
+      <!-- sliders -->
+      <!-- sliderInterval -->
+
+      <label for="sliderInterval">
+        <span> Interval </span>
+        <span id="intervalLabel">15m</span>
+        <input
+          type="range"
+          min="1"
+          max="4"
+          value="2"
+          class="slider"
+          id="sliderInterval"
+        />
+      </label>
+
+      <!-- sliderDaterange -->
+      <label>
+        <span>Date Range</span>
+        <input
+          type="range"
+          min="0"
+          max="4"
+          value="1"
+          class="slider"
+          id="sliderDateRanges"
+        />
+      </label>
+      <span id="dateRangeLabel">1m</span>
     </div>
     <button id="addFavoriteButton">Add to favorite</button>
     <ul id="favoritesList"></ul>

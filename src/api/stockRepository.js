@@ -25,4 +25,21 @@ export class StockRepository {
       return [];
     }
   }
+
+  async fetchDateRangeData(ticker, start, end) {
+    const url = `${this.baseUrl}/stock/date-range/${ticker}?start=${start}&end=${end}`;
+
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`http errror: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log("response json", result);
+    return result.data;
+  }
+  catch(error) {
+    console.error("fetchDateRangeDate failed:", error);
+    return [];
+  }
 }
