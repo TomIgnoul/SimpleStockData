@@ -1,28 +1,27 @@
 "use strict";
 
-import { apiKey } from "./constants";
-
 export class StockRepository {
   constructor() {
-    this.apiKey = apiKey;
-    this.baseUrl = "http//localhost:8080";
+    this.baseUrl = "http://localhost:8080";
   }
 
-  async fetchIntradayData(symbol = "AAPL", interval = "30m") {
-    const url = `http://localhost:8080/stock/${symbol}?interval=${interval}`;
-
+  async fetchIntradayData(symbol = "AAPL", interval = "30min") {
     try {
+      const url = `${this.baseUrl}/stock/${symbol}?interval=${interval}`;
+      //fetch url with errorhandling
       const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`http errror: ${response.status}`);
+      }
 
-      const rawText = await response.text(); // get raw response first
-      console.log("RAW response text:", rawText); // log it
+      //reading JSON body
+      const result = await response.json();
+      console.log("response json", json);
 
-      // try to parse JSON manually
-      const data = JSON.parse(rawText);
-
-      return data.data; // this should be the array
+      //json.data -> the actual array of rows for my chart
+      return result.data;
     } catch (error) {
-      console.error("Failed to fetch intraday data:", error);
+      console.error("fetIntradayData failed:", error);
       return [];
     }
   }
