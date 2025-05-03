@@ -1,7 +1,5 @@
 "use strict";
 
-import { fetchIntradayData } from "../api/intradayAPI.js";
-
 export function transformIntradayData(intradayData, interval) {
   const seriesKey = `Time Series (${interval})`;
   const raw = intradayData[seriesKey];
