@@ -3,28 +3,43 @@
 import { Chart } from "chart.js";
 import { renderChart } from "../utils/renderChart";
 import { intradayData } from "../init/intradayData";
+import { dateRangeData } from "../init/dateRangeData";
 
 const intervals = ["1m", "5m", "15m", "30m", "60m"];
+const dateRanges = {
+  0: { label: "7d", offset: 7 },
+  1: { label: "1m", offset: 30 },
+  2: { label: "3m", offset: 90 },
+  3: { label: "6m", offset: 180 },
+  4: { label: "1y", offset: 365 },
+};
 
-const slider = document.getElementById("slider");
+const sliderInterval = document.getElementById("sliderInterval");
+const intervalLabel = document.getElementById("intervalLabel");
+
+const sliderDateRanges = document.getElementById("sliderDateRanges");
+const dateRangeLabel = document.getElementById("dateRangeLabel");
+
 const tickerInput = document.getElementById("tickerTextBox");
 const searchButton = document.getElementById("btntickerTextBox");
 const addFavoriteButton = document.getElementById("addFavoriteButton");
 
-const defaultInterval = intervals[parseInt(slider.value, 10)] || "15m";
+const defaultInterval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
 
 //initial chart load
 intradayData("AAPL", defaultInterval);
 
-//slider
-slider.addEventListener("input", () => {
+//intervalslider
+sliderInterval.addEventListener("input", () => {
   const ticker = tickerInput.value || "AAPL";
-  const interval = intervals[parseInt(slider.value, 10)];
+  const interval = intervals[parseInt(sliderInterval.value, 10)];
 
   if (!interval) {
     console.warn("Invalid interval selected.");
     return;
   }
+
+  intervalLabel.textContent = interval;
 
   console.log(`Interval changed: ${interval}`);
   intradayData(ticker, interval);
@@ -39,7 +54,7 @@ searchButton.addEventListener("click", () => {
     return;
   }
 
-  const interval = intervals[parseInt(slider.value, 10)] || "15m";
+  const interval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
   intradayData(keyword, interval);
 });
 
@@ -78,7 +93,7 @@ function renderFavorites() {
     span.style.cursor = "pointer";
     span.style.marginRight = "10px";
     span.addEventListener("click", () => {
-      const interval = intervals[parseInt(slider.value, 10)] || "15m";
+      const interval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
       intradayData(ticker, interval);
       tickerInput.Value = ticker;
     });
@@ -103,3 +118,13 @@ function removeFromFavorites(ticker) {
   localStorage.setItem("favorites", JSON.stringify(updated));
   renderFavorites();
 }
+
+sliderDateRanges.addEventListener("input", () => {
+  const ticker = tickerInput.value.trim().toUpperCase() || "AAPL";
+  const selected = parseInt(sliderDateRanges.value, 10);
+  const offsetDays = dateRanges[selected]?.offset || 30;
+
+  dateRangeLabel.textContent = dateRanges[selected].label || "1m";
+
+  dateRangeData(ticker, offsetDays);
+});
