@@ -8,12 +8,15 @@
   </head>
   <body>
     <div>
+      <!-- Canvas -->
       <canvas id="chartCanvas" width="600" height="400"></canvas>
+      <!-- searchSymbol textbox and confirmation button -->
       <input type="text" value="AAPL" id="tickerTextBox" /><button
         id="btntickerTextBox"
       >
         Search
       </button>
+      <!-- Slider -->
       <input
         type="range"
         min="1"
@@ -25,6 +28,7 @@
     </div>
     <button id="addFavoriteButton">Add to favorite</button>
     <ul id="favoritesList"></ul>
+
     <script type="module" src="/src/main/main.js"></script>
   </body>
 </html>
