@@ -8,17 +8,21 @@ export class StockRepository {
     this.baseUrl = "http//localhost:8080";
   }
 
-  async fetchIntradayData(symbol = "AAPL", interval = "5min") {
-    const url = `${this.baseUrl}/stock/${symbol}?interval=${interval}`;
+  async fetchIntradayData(symbol = "AAPL", interval = "30m") {
+    const url = `http://localhost:8080/stock/${symbol}?interval=${interval}`;
 
     try {
       const response = await fetch(url);
-      if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
 
-      const data = await response.json();
-      return data.data; //actual array of OHLCV
+      const rawText = await response.text(); // get raw response first
+      console.log("RAW response text:", rawText); // log it
+
+      // try to parse JSON manually
+      const data = JSON.parse(rawText);
+
+      return data.data; // this should be the array
     } catch (error) {
-      console.error("Failed to fetch intraday data:", error.message);
+      console.error("Failed to fetch intraday data:", error);
       return [];
     }
   }
