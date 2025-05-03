@@ -16,12 +16,12 @@ export class StockRepository {
 
       //reading JSON body
       const result = await response.json();
-      console.log("response json", json);
+      console.log("response json", result);
 
       //json.data -> the actual array of rows for my chart
       return result.data;
     } catch (error) {
-      console.error("fetIntradayData failed:", error);
+      console.error("fetchIntradayData failed:", error);
       return [];
     }
   }

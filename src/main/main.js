@@ -1,26 +1,35 @@
 "use strict";
 
-import { Chart } from "chart.js/auto";
-import { renderChart } from "../utils/renderChart.js";
-import { intradayData } from "../init/intradayData.js";
-import { searchSymbol } from "../api/searchSymbolAPI.js";
+import { Chart } from "chart.js";
+import { renderChart } from "../utils/renderChart";
+import { intradayData } from "../init/intradayData";
 
-const intervals = ["1min", "5min", "15min", "30min", "60min"];
+const intervals = ["1m", "5m", "15m", "30m", "60m"];
+
 const slider = document.getElementById("slider");
 const tickerInput = document.getElementById("tickerTextBox");
 const searchButton = document.getElementById("btntickerTextBox");
 
-// Initial chart load
-intradayData("AAPL", intervals[slider.value]);
+const defaultInterval = intervals[parseInt(slider.value, 10)] || "15m";
 
-// Update chart on slider change
+//initial chart load
+intradayData("AAPL", defaultInterval);
+
+//slider
 slider.addEventListener("input", () => {
   const ticker = tickerInput.value || "AAPL";
-  console.log(`Interval changed: ${intervals[slider.value]}`);
-  intradayData(ticker, intervals[slider.value]);
+  const interval = intervals[parseInt(slider.value, 10)];
+
+  if (!interval) {
+    console.warn("Invalid interval selected.");
+    return;
+  }
+
+  console.log(`Interval changed: ${interval}`);
+  intradayData(ticker, interval);
 });
 
-// Search button click
+// searchbutton
 searchButton.addEventListener("click", () => {
   const keyword = tickerInput.value.trim();
 
@@ -29,8 +38,6 @@ searchButton.addEventListener("click", () => {
     return;
   }
 
-  console.log(`Searching for: ${keyword}`);
-  searchSymbol(keyword).then((results) => {
-    console.log(results);
-  });
+  const interval = intervals[parseInt(slider.value, 10)] || "15m";
+  intradayData(keyword, interval);
 });

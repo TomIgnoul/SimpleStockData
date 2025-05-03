@@ -2,11 +2,13 @@
 
 export function transformIntradayData(dataArray) {
   if (!Array.isArray(dataArray) || dataArray.length == 0) {
-    return []; //if argument is not an array or has no data in there than we return an empty array
+    return [];
   }
 
+  console.log("Raw dataArray received: ", dataArray);
+  //we can work with .map() function as we checked if dataArray is a valid array
   return dataArray.map((entry) => ({
-    time: entry.Date,
+    time: entry.Datetime,
     open: parseFloat(entry.Open),
     high: parseFloat(entry.High),
     low: parseFloat(entry.Low),
