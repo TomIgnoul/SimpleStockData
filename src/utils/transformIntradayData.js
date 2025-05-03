@@ -1,18 +1,18 @@
 "use strict";
 
-export function transformIntradayData(intradayData, interval) {
-  const seriesKey = `Time Series (${interval})`;
-  const raw = intradayData[seriesKey];
-  if (!raw) {
-    console.error(`kon '${seriesKey}' niet vinden in Response`, intradayData);
+export function transformIntradayData(dataArray) {
+  if (!Array.isArray(dataArray) || dataArray.length == 0) {
     return [];
   }
-  return Object.entries(raw).map(([time, vals]) => ({
-    time,
-    open: parseFloat(vals["1. open"]),
-    high: parseFloat(vals["2. high"]),
-    low: parseFloat(vals["3. low"]),
-    close: parseFloat(vals["4. close"]),
-    volume: parseInt(vals["5. volume"], 10),
+
+  console.log("Raw dataArray received: ", dataArray);
+  //we can work with .map() function as we checked if dataArray is a valid array
+  return dataArray.map((entry) => ({
+    time: entry.Datetime,
+    open: parseFloat(entry.Open),
+    high: parseFloat(entry.High),
+    low: parseFloat(entry.Low),
+    close: parseFloat(entry.Close),
+    volume: parseInt(entry.Volume, 10),
   }));
 }

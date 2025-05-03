@@ -1,22 +1,23 @@
 "use strict";
 
-import { renderChart } from "../utils/renderChart.js";
-import { StockRepository } from "../api/stockRepository.js";
+import { StockRepository } from "../api/stockRepository";
 import { validateParams } from "../utils/validateParams.js";
 import { transformIntradayData } from "../utils/transformIntradayData.js";
+import { renderChart } from "../utils/renderChart.js";
 
-export async function intradayData(ticker = "AAPL", interval = "30min") {
+export async function intradayData(ticker = "AAPL", interval = "15m") {
   try {
     validateParams(ticker, interval);
 
-    //const intradayData = await fetchIntradayData(ticker, interval);
+    //fetch rawdata from API
     const stockRepo = new StockRepository();
-    const intradayData = await stockRepo.fetchIntradayData(ticker, interval);
+    const rawData = await stockRepo.fetchIntradayData(ticker, interval);
 
-    const rows = transformIntradayData(intradayData, interval);
-    console.log(rows); //<<****
-    renderChart(rows);
+    //transform rawdata to readible data for renderchart
+    const chartData = transformIntradayData(rawData);
+
+    renderChart(chartData);
   } catch (error) {
-    console.error("Initialisatie intraday data is mislukt:", error);
+    console.error("failed to load intraday data:", error);
   }
 }
