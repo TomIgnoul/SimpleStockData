@@ -32,8 +32,8 @@ export function renderChart(data) {
       scales: {
         x: {
           ticks: {
-            maxRotation: 45,
-            minRotation: 45,
+            maxRotation: 20,
+            minRotation: 20,
           },
         },
         y: {
