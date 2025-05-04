@@ -1,5 +1,6 @@
 "use strict";
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Chart } from "chart.js";
 import { renderLineChart } from "../utils/renderLineChart";
 import { renderBarChart } from "../utils/renderBarChart";

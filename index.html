@@ -7,66 +7,81 @@
     <title>StockData</title>
   </head>
   <body>
-<!-- CHART -->
-    <div id="ChartType">
-      <select id="ChartTypeSelector">
-        <option value="line">linechart</option>
-        <option value="bar">barchart</option>
-      </select>
-
-
-    </div>
-    <div>
-      <canvas id="chartCanvas" width="600" height="400"></canvas>
-      <!-- TEXTBOX -->
-      <input type="text" value="AAPL" id="tickerTextBox" /><button
-        id="btntickerTextBox"
-      >
-        Search
-      </button>
-        <!-- sliders -->
-        <!-- sliderbutton -->
-        <div id="sliderDiv">
-          <button id="toggleInterval">Intraday</button>
-          <button id="toggleDateRange">Date Range</button>
-        
-          <!-- Intraday Slider Container -->
-          <div id="intervalContainer">
-            <label for="sliderInterval">
-              <span>Interval</span>
-              
-              <input
-                type="range"
-                min="1"
-                max="4"
-                value="2"
-                class="slider"
-                id="sliderInterval"
-              />
-              <span id="intervalLabel">15m</span>
-            </label>
+    <body>
+      <div id="mainDiv" class="container py-4">
+        <!-- Header -->
+        <div class="mb-4 text-center">
+          <h1>📈 Stock Chart Viewer</h1>
+        </div>
+    
+        <div class="row mb-4">
+          <!-- Chart + Selector -->
+          <div class="col-md-10 position-relative" style="flex: 1;">
+            <select id="ChartTypeSelector" class="form-select mb-2 chart-select">
+              <option value="line">Line Chart</option>
+              <option value="bar">Bar Chart</option>
+            </select>
+            <canvas id="chartCanvas" height="280"></canvas> <!-- 👈 reduce height -->
           </div>
-        
-          <!--Date Range Slider Container -->
-          <div id="dateRangeContainer">
-            <label>
-              <span>Date Range</span>
-              <input
-                type="range"
-                min="0"
-                max="4"
-                value="1"
-                class="slider"
-                id="sliderDateRanges"
-              />
-            </label>
-            <span id="dateRangeLabel">1m</span>
+    
+          <!-- Sidebar: Search + Favorites -->
+          <div class="col-md-2" style="flex: 0 0 200px; max-width: 200px;">
+
+            <input
+              type="text"
+              value="AAPL"
+              id="tickerTextBox"
+              class="form-control mb-2"
+            />
+            <button id="btntickerTextBox" class="btn btn-primary w-100 mb-2">
+              Search
+            </button>
+            <button id="addFavoriteButton" class="btn btn-outline-secondary w-100 mb-3">
+              Add to Favorite
+            </button>
+            <h6>Favorites</h6>
+            <ul id="favoritesList" class="list-group small"></ul>
           </div>
         </div>
-        
-    <!-- favorites -->
-    <button id="addFavoriteButton">Add to favorite</button>
-    <ul id="favoritesList"></ul>
+    
+        <!-- Sliders -->
+        <div class="row mb-4">
+          <div class="col text-center">
+            <button id="toggleInterval" class="btn btn-outline-primary me-2">Intraday</button>
+            <button id="toggleDateRange" class="btn btn-outline-primary">Date Range</button>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-6" id="intervalContainer">
+            <label for="sliderInterval" class="form-label">
+              Intraday Interval: <span id="intervalLabel">15m</span>
+            </label>
+            <input
+              type="range"
+              min="1"
+              max="4"
+              value="2"
+              class="form-range"
+              id="sliderInterval"
+            />
+          </div>
+          <div class="col-md-6" id="dateRangeContainer">
+            <label for="sliderDateRanges" class="form-label">
+              Date Range: <span id="dateRangeLabel">1m</span>
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="4"
+              value="1"
+              class="form-range"
+              id="sliderDateRanges"
+            />
+          </div>
+        </div>
+      </div>
+    
     <script type="module" src="/src/main/main.js"></script>
   </body>
 </html>
