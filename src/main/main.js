@@ -4,6 +4,7 @@ import { Chart } from "chart.js";
 import { renderChart } from "../utils/renderChart";
 import { intradayData } from "../init/intradayData";
 import { dateRangeData } from "../init/dateRangeData";
+import { debounce } from "../utils/debounce";
 
 const intervals = ["1m", "5m", "15m", "30m", "60m"];
 const dateRanges = {
@@ -16,9 +17,15 @@ const dateRanges = {
 
 const sliderInterval = document.getElementById("sliderInterval");
 const intervalLabel = document.getElementById("intervalLabel");
+const debounceIntradayData = debounce((ticker, interval) => {
+  intradayData(ticker, interval);
+});
 
 const sliderDateRanges = document.getElementById("sliderDateRanges");
 const dateRangeLabel = document.getElementById("dateRangeLabel");
+const debounceDateRangeData = debounce((ticker, interval) => {
+  dateRangeData(ticker, interval);
+});
 
 const tickerInput = document.getElementById("tickerTextBox");
 const searchButton = document.getElementById("btntickerTextBox");
@@ -29,7 +36,7 @@ const defaultInterval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
 //initial chart load
 intradayData("AAPL", defaultInterval);
 
-//intervalslider
+//sliderInterval
 sliderInterval.addEventListener("input", () => {
   const ticker = tickerInput.value || "AAPL";
   const interval = intervals[parseInt(sliderInterval.value, 10)];
@@ -41,8 +48,18 @@ sliderInterval.addEventListener("input", () => {
 
   intervalLabel.textContent = interval;
 
-  console.log(`Interval changed: ${interval}`);
-  intradayData(ticker, interval);
+  debounceIntradayData(ticker, interval);
+});
+
+//sliderDateRanges
+sliderDateRanges.addEventListener("input", () => {
+  const ticker = tickerInput.value.trim().toUpperCase() || "AAPL";
+  const selected = parseInt(sliderDateRanges.value, 10);
+  const offsetDays = dateRanges[selected]?.offset || 30;
+
+  dateRangeLabel.textContent = dateRanges[selected].label || "1m";
+
+  debounceDateRangeData(ticker, offsetDays);
 });
 
 // searchbutton
@@ -118,13 +135,3 @@ function removeFromFavorites(ticker) {
   localStorage.setItem("favorites", JSON.stringify(updated));
   renderFavorites();
 }
-
-sliderDateRanges.addEventListener("input", () => {
-  const ticker = tickerInput.value.trim().toUpperCase() || "AAPL";
-  const selected = parseInt(sliderDateRanges.value, 10);
-  const offsetDays = dateRanges[selected]?.offset || 30;
-
-  dateRangeLabel.textContent = dateRanges[selected].label || "1m";
-
-  dateRangeData(ticker, offsetDays);
-});
