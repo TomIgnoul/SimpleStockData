@@ -1,10 +1,12 @@
 "use strict";
 
 import { Chart } from "chart.js";
-import { renderChart } from "../utils/renderChart";
+import { renderLineChart } from "../utils/renderLineChart";
+import { renderBarChart } from "../utils/renderBarChart";
 import { intradayData } from "../init/intradayData";
 import { dateRangeData } from "../init/dateRangeData";
 import { debounce } from "../utils/debounce";
+import { transformToChart } from "../utils/transformChartData";
 
 // INTERVAL + RANGE OPTIONS
 const intervals = ["1m", "5m", "15m", "30m", "60m"];
@@ -17,6 +19,8 @@ const dateRanges = {
 };
 
 // ELEMENTS
+const chartTypeSelector = document.getElementById("ChartTypeSelector");
+
 const sliderInterval = document.getElementById("sliderInterval");
 const intervalLabel = document.getElementById("intervalLabel");
 const sliderDateRanges = document.getElementById("sliderDateRanges");
@@ -31,6 +35,19 @@ const dateRangeContainer = document.getElementById("dateRangeContainer");
 const tickerInput = document.getElementById("tickerTextBox");
 const searchButton = document.getElementById("btntickerTextBox");
 const addFavoriteButton = document.getElementById("addFavoriteButton");
+
+//CHART SELECT
+
+export function renderChartByType(candlestickData, options = {}) {
+  const type = chartTypeSelector.value || "line";
+  const chartData = transformToChart(candlestickData, "Close Price");
+
+  if (type === "bar") {
+    renderBarChart(chartData, options);
+  } else {
+    renderLineChart(chartData, options);
+  }
+}
 
 //CHART LOADERS BASED ON SLIDER STATES:
 
