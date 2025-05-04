@@ -1,6 +1,7 @@
 import { StockRepository } from "../api/stockRepository";
-import { renderChart } from "../utils/renderChart";
+// import { renderChart } from "../utils/renderChart";
 import { transformDateRangeData } from "../utils/transformDateRangeData";
+import { renderChartByType } from "../main/main.js";
 
 export async function dateRangeData(ticker, offsetDays) {
   try {
@@ -20,7 +21,7 @@ export async function dateRangeData(ticker, offsetDays) {
       endDate
     );
     const chartData = transformDateRangeData(rawData);
-    renderChart(chartData);
+    renderChartByType(chartData);
   } catch (error) {
     console.error("failed to load date range data:", error);
   }

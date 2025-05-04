@@ -7,8 +7,18 @@
     <title>StockData</title>
   </head>
   <body>
+<!-- CHART -->
+    <div id="ChartType">
+      <select id="ChartTypeSelector">
+        <option value="line">linechart</option>
+        <option value="bar">barchart</option>
+      </select>
+
+
+    </div>
     <div>
       <canvas id="chartCanvas" width="600" height="400"></canvas>
+      <!-- TEXTBOX -->
       <input type="text" value="AAPL" id="tickerTextBox" /><button
         id="btntickerTextBox"
       >

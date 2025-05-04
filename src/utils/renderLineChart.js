@@ -1,29 +1,28 @@
 "use strict";
 
 import { Chart } from "chart.js/auto";
+import { getChartInstance, setChartInstance } from "./chartState.js";
 
-let chartInstance = null;
-
-export function renderChart(data) {
-  const labels = data.map((point) => point.time);
-  const values = data.map((point) => point.close);
-
+export function renderLineChart(data) {
   const ctx = document.getElementById("chartCanvas").getContext("2d");
 
-  if (chartInstance) {
-    chartInstance.destroy();
+  const existingChart = getChartInstance();
+  if (existingChart) {
+    existingChart.destroy();
   }
 
-  chartInstance = new Chart(ctx, {
+  const newChart = new Chart(ctx, {
     type: "line",
     data: {
-      labels: labels,
+      labels: data.labels,
       datasets: [
         {
-          label: "Close Price",
-          data: values,
+          label: data.label || "Close Price",
+          data: data.values,
           borderWidth: 2,
+          borderColor: "#007bff",
           fill: false,
+          tension: 0.2,
         },
       ],
     },
@@ -42,4 +41,6 @@ export function renderChart(data) {
       },
     },
   });
+
+  setChartInstance(newChart);
 }
