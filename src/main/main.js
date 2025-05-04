@@ -37,8 +37,11 @@ const searchButton = document.getElementById("btntickerTextBox");
 const addFavoriteButton = document.getElementById("addFavoriteButton");
 
 //CHART SELECT
+let lastCandlestickData = null;
 
 export function renderChartByType(candlestickData, options = {}) {
+  lastCandlestickData = candlestickData;
+
   const type = chartTypeSelector.value || "line";
   const chartData = transformToChart(candlestickData, "Close Price");
 
@@ -48,6 +51,12 @@ export function renderChartByType(candlestickData, options = {}) {
     renderLineChart(chartData, options);
   }
 }
+
+chartTypeSelector.addEventListener("change", () => {
+  if (lastCandlestickData) {
+    renderChartByType(lastCandlestickData);
+  }
+});
 
 //CHART LOADERS BASED ON SLIDER STATES:
 
