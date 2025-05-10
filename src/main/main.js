@@ -158,7 +158,6 @@ addFavoriteButton.addEventListener("click", () => {
   });
 });
 
-// RENDER FAVORITES
 function renderFavorites() {
   const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
   const list = document.getElementById("favoritesList");
@@ -166,11 +165,12 @@ function renderFavorites() {
 
   favorites.forEach((ticker) => {
     const li = document.createElement("li");
+    li.className =
+      "list-group-item d-flex justify-content-between align-items-center";
 
     const span = document.createElement("span");
     span.textContent = ticker;
     span.style.cursor = "pointer";
-    span.style.marginRight = "10px";
     span.addEventListener("click", () => {
       const interval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
       intradayData(ticker, interval);
@@ -179,6 +179,7 @@ function renderFavorites() {
 
     const removeBtn = document.createElement("button");
     removeBtn.textContent = "Remove";
+    removeBtn.className = "btn btn-sm btn-outline-danger";
     removeBtn.addEventListener("click", () => {
       removeFromFavorites(ticker);
     });

@@ -15,7 +15,7 @@ export async function intradayData(ticker = "AAPL", interval = "15m") {
     const rawData = await stockRepo.fetchIntradayData(ticker, interval);
 
     //transform rawdata to readible data for renderchart
-    const chartData = transformIntradayData(rawData);
+    let chartData = transformIntradayData(rawData);
 
     renderChartByType(chartData);
   } catch (error) {
