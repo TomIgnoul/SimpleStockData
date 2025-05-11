@@ -8,6 +8,7 @@ import { intradayData } from "../init/intradayData";
 import { dateRangeData } from "../init/dateRangeData";
 import { debounce } from "../utils/debounce";
 import { transformToChart } from "../utils/transformChartData";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 // INTERVAL + RANGE OPTIONS
 const intervals = ["1m", "5m", "15m", "30m", "60m"];
@@ -140,45 +141,79 @@ searchButton.addEventListener("click", () => {
 });
 
 // ADD TO FAVORITES
+
+function getFavorites() {
+  return JSON.parse(localStorage.getItem("favorites") || "[]");
+}
+
+function updateFavoriteButtonState() {
+  const ticker = tickerInput.value.trim().toUpperCase();
+  const favorites = getFavorites();
+  const icon = addFavoriteButton.querySelector("i");
+
+  if (favorites.includes(ticker)) {
+    icon.className = "bi bi-star-fill";
+    addFavoriteButton.setAttribute("data-mode", "remove");
+  } else {
+    icon.className = "bi bi-star";
+    addFavoriteButton.setAttribute("data-mode", "add");
+  }
+}
+
 addFavoriteButton.addEventListener("click", () => {
   requestAnimationFrame(() => {
     const ticker = tickerInput.value.trim().toUpperCase();
     if (!ticker) return;
 
-    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+    const mode = addFavoriteButton.getAttribute("data-mode");
 
-    if (!favorites.includes(ticker)) {
-      favorites.push(ticker);
-      localStorage.setItem("favorites", JSON.stringify(favorites));
-      console.log(`Added ${ticker}`);
-      renderFavorites();
+    if (mode === "remove") {
+      removeFromFavorites(ticker);
     } else {
-      console.log(`${ticker} is already a favorite`);
+      const favorites = getFavorites();
+      if (!favorites.includes(ticker)) {
+        favorites.push(ticker);
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        console.log(`Added ${ticker}`);
+        renderFavorites();
+      }
     }
+
+    updateFavoriteButtonState();
   });
 });
 
-// RENDER FAVORITES
+function removeFromFavorites(ticker) {
+  const favorites = getFavorites();
+  const updated = favorites.filter((item) => item !== ticker);
+  localStorage.setItem("favorites", JSON.stringify(updated));
+  updateFavoriteButtonState();
+  renderFavorites();
+}
+
 function renderFavorites() {
-  const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  const favorites = getFavorites();
   const list = document.getElementById("favoritesList");
   list.innerHTML = "";
 
   favorites.forEach((ticker) => {
     const li = document.createElement("li");
+    li.className =
+      "list-group-item d-flex justify-content-between align-items-center";
 
     const span = document.createElement("span");
     span.textContent = ticker;
     span.style.cursor = "pointer";
-    span.style.marginRight = "10px";
     span.addEventListener("click", () => {
       const interval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
       intradayData(ticker, interval);
       tickerInput.value = ticker;
+      updateFavoriteButtonState();
     });
 
     const removeBtn = document.createElement("button");
     removeBtn.textContent = "Remove";
+    removeBtn.className = "btn btn-sm btn-outline-danger";
     removeBtn.addEventListener("click", () => {
       removeFromFavorites(ticker);
     });
@@ -189,11 +224,11 @@ function renderFavorites() {
   });
 }
 
-function removeFromFavorites(ticker) {
-  const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-  const updated = favorites.filter((item) => item !== ticker);
-  localStorage.setItem("favorites", JSON.stringify(updated));
-  renderFavorites();
-}
+// Trigger state update when typing in input
+tickerInput.addEventListener("input", () => {
+  updateFavoriteButtonState();
+});
 
+// Initial render
 renderFavorites();
+updateFavoriteButtonState();

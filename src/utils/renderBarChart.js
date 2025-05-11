@@ -1,6 +1,7 @@
 "use strict";
 import { Chart } from "chart.js/auto";
 import { getChartInstance, setChartInstance } from "../utils/chartState.js";
+
 let barchartInstance = null;
 
 export function renderBarChart(data) {
@@ -28,8 +29,27 @@ export function renderBarChart(data) {
       scales: {
         x: {
           ticks: {
+            autoSkip: true,
             maxRotation: 20,
             minRotation: 20,
+            callback: function (value) {
+              const label = this.getLabelForValue(value);
+              const date = new Date(label);
+
+              // Detect intraday vs daily and format accordingly
+              const isIntraday =
+                date.getHours() !== 0 || date.getMinutes() !== 0;
+
+              return isIntraday
+                ? date.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })
+                : date.toLocaleDateString([], {
+                    month: "short",
+                    day: "numeric",
+                  }); // e.g. "May 13"
+            },
           },
         },
         y: {

@@ -31,8 +31,17 @@ export function renderLineChart(data) {
       scales: {
         x: {
           ticks: {
-            maxRotation: 20,
-            minRotation: 20,
+            autoSkip: true,
+            maxRotation: 0,
+            minRotation: 0,
+            callback: function (value) {
+              const label = this.getLabelForValue(value);
+              const date = new Date(label);
+              return date.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+            },
           },
         },
         y: {
