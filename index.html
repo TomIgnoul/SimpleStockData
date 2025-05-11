@@ -7,86 +7,71 @@
     <title>StockData</title>
   </head>
   <body>
-    <body>
-      <div id="mainDiv" class="container py-4">
-        <!-- Header -->
-        <div class="mb-4 text-center">
-          <h1>📈 Simple Stock Data 📈</h1>
-        </div>
-        <div id="filler"></div>
-        
-        <!-- Chart + Selector -->
-          <!-- <div id ="ChartAndSelectorAndSideBar" class="row mb-4"> -->
-            <div id ="ChartAndSelectorAndSideBar" class="position-relative">
-              <div id="selectorDiv">
-                <select id="ChartTypeSelector" class="w-25 p-3" >
-                  <option value="line">Line Chart</option>
-                  <option value="bar">Bar Chart</option>
-                </select>
-              </div>
-              <div id ="ChartAndSelector" class="col-md-10" style="flex: 1;">
+    <div id="mainDiv" class="container">
+      <!--  Header -->
+      <header class="header">
+        <h1>📈 Simple Stock Data 📈</h1>
+      </header>
 
-                <canvas id="chartCanvas"></canvas> 
-              </div>
-        
-              <!-- Sidebar: Search + Favorites -->
-              <div class="col-md-2" style="flex: 0 0 200px; max-width: 200px;">
-    
-                <input
-                  type="text"
-                  value="AAPL"
-                  id="tickerTextBox"
-                  class="form-control mb-2"
-                />
-                <button id="btntickerTextBox" class="btn btn-primary w-100 mb-2">
-                  Search
-                </button>
-                <button id="addFavoriteButton" class="btn btn-outline-secondary w-100 mb-3">
-                  Add to Favorite
-                </button>
-                <h6>Favorites</h6>
-                <ul id="favoritesList" class="list-group list-group-flush"></ul>
-              </div>                                 
-            </div>
-    
-        <!-- Sliders -->
-        <div class="row mb-4">
-          <div class="col text-center">
-            <button id="toggleInterval" class="btn btn-outline-primary me-2">Intraday</button>
-            <button id="toggleDateRange" class="btn btn-outline-primary">Date Range</button>
+      <!-- Chart Area Group -->
+
+      <!-- Chart Controls (Selector) -->
+      <div class="row">
+        <div class="col-6">
+          <div class="chart-controls">
+            <label for="ChartTypeSelector"></label>
+            <select id="ChartTypeSelector">
+              <option value="line">Line Chart</option>
+              <option value="bar">Bar Chart</option>
+            </select>
           </div>
         </div>
-    
-        <div class="row">
-          <div class="col-md-6" id="intervalContainer">
-            <label for="sliderInterval" class="form-label">
-              Intraday Interval: <span id="intervalLabel">15m</span>
-            </label>
-            <input
-              type="range"
-              min="1"
-              max="4"
-              value="2"
-              class="form-range"
-              id="sliderInterval"
-            />
-          </div>
-          <div class="col-md-6" id="dateRangeContainer">
-            <label for="sliderDateRanges" class="form-label">
-              Date Range: <span id="dateRangeLabel">1m</span>
-            </label>
-            <input
-              type="range"
-              min="0"
-              max="4"
-              value="1"
-              class="form-range"
-              id="sliderDateRanges"
-            />
+        <div class="col-6">
+          <div class="SearchAndFavorites">
+            <input type="text" value="AAPL" id="tickerTextBox" class="input" />
+            <button id="btntickerTextBox" class="btn">
+              <i class="bi bi-send-fill"></i>
+            </button>
+            <button id="addFavoriteButton" class="btn secondary">
+              Add to Favorite
+            </button>
+            <h6>Favorites</h6>
+            <ul id="favoritesList" class="favorites-list"></ul>
           </div>
         </div>
       </div>
-    
+
+      <!-- Actual Chart Canvas -->
+      <div class="chart-wrapper">
+        <canvas id="chartCanvas"></canvas>
+      </div>
+
+      <!--Search and Favorites -->
+
+      <!--  Interval/Range Mode Switch -->
+      <div class="mode-switch">
+        <button id="toggleInterval" class="btn">Intraday</button>
+        <button id="toggleDateRange" class="btn">Date Range</button>
+      </div>
+
+      <!-- Slider Controls Group -->
+      <div class="slider-group-wrapper">
+        <div class="slider-group" id="intervalContainer">
+          <label for="sliderInterval">
+            Intraday Interval: <span id="intervalLabel">15m</span>
+          </label>
+          <input type="range" min="1" max="4" value="2" id="sliderInterval" />
+        </div>
+
+        <div class="slider-group" id="dateRangeContainer">
+          <label for="sliderDateRanges">
+            Date Range: <span id="dateRangeLabel">1m</span>
+          </label>
+          <input type="range" min="0" max="4" value="1" id="sliderDateRanges" />
+        </div>
+      </div>
+    </div>
+
     <script type="module" src="/src/main/main.js"></script>
   </body>
 </html>
