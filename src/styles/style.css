@@ -2,6 +2,7 @@
   box-sizing: border-box;
 }
 
+/* Search Field and buttonbutton */
 .SearchAndFavorites {
   display: flex;
   margin-bottom: 1px;
@@ -12,8 +13,9 @@
   font-size: 17px;
   border: 1px solid grey;
   float: left;
-  width: 80%;
+  width: 60%;
   background: #f1f1f1;
+  border-left: none;
 }
 
 #btntickerTextBox {
@@ -37,4 +39,19 @@
   content: "";
   clear: both;
   display: table;
+}
+
+/* addFavoriteButton */
+#addFavoriteButton {
+    float: left;
+    width: 20%;
+    padding: 7px;
+    background: #f1f1f1;;
+    color: black;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-right: none; 
+    cursor: pointer;
+    border-radius: 0px !important ;
+  }
 }
