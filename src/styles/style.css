@@ -2,10 +2,28 @@
   box-sizing: border-box;
 }
 
-/* Search Field and buttonbutton */
+/* .col-6 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+/* ========================
+   Header
+======================== */
+
+.header {
+  text-align: center;
+}
+
+/* ========================
+   Search Input Group
+======================== */
 .SearchAndFavorites {
   display: flex;
-  margin-bottom: 1px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: fit-content;
 }
 
 .SearchAndFavorites input {
@@ -14,8 +32,13 @@
   border: 1px solid grey;
   float: left;
   width: 60%;
-  background: #f1f1f1;
+  background: #f1f1f1 !important;
   border-left: none;
+}
+
+.SearchAndFavorites input:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 #btntickerTextBox {
@@ -43,15 +66,41 @@
 
 /* addFavoriteButton */
 #addFavoriteButton {
-    float: left;
-    width: 20%;
-    padding: 7px;
-    background: #f1f1f1;;
-    color: black;
-    font-size: 17px;
-    border: 1px solid grey;
-    border-right: none; 
-    cursor: pointer;
-    border-radius: 0px !important ;
-  }
+  float: left;
+  width: 20%;
+  padding: 7px;
+  background: #f1f1f1;
+  color: black;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-right: none;
+  cursor: pointer;
+  border-radius: 0px !important ;
+}
+
+/* ========================
+   Chart type selector
+======================== */
+#ChartTypeSelector {
+  appearance: none; /* Standard */
+  -webkit-appearance: none; /* Safari */
+  -moz-appearance: none;
+  display: block;
+  margin: 0px;
+  background: #f1f1f1;
+  margin: auto;
+  font-size: 17px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  border: 1px solid grey;
+  border-left: none;
+  border-right: none;
+  text-align-last: center;
+}
+
+#ChartTypeSelector:focus {
+  border-color: #007bff; /* or any color you like */
+  outline: none; /* optional: removes default glow */
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* optional soft glow */
 }
