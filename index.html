@@ -39,36 +39,61 @@
         </div>
 
         <!-- Actual Chart Canvas -->
-        <div class="col-11">
+        <div class="col-12">
           <div class="chart-wrapper">
             <canvas id="chartCanvas"></canvas>
           </div>
         </div>
-        <!--Favorites still to add-->
-        <div class="col-1"></div>
-      </div>
 
-      <!--  Interval/Range Mode Switch -->
-      <div class="mode-switch">
-        <button id="toggleInterval" class="btn">Intraday</button>
-        <button id="toggleDateRange" class="btn">Date Range</button>
-      </div>
+        <!-- Slider Controls Group -->
+        <!-- <div class="slider-group-wrapper"> -->
+        <div class="row">
+          <!-- Left: Mode Switch -->
+          <div class="col-2">
+            <div class="mode-switch">
+              <button id="toggleInterval" class="btn">Intraday</button>
+              <button id="toggleDateRange" class="btn">Date Range</button>
+            </div>
+          </div>
 
-      <!-- Slider Controls Group -->
-      <div class="slider-group-wrapper">
-        <div class="slider-group" id="intervalContainer">
-          <label for="sliderInterval">
-            Intraday Interval: <span id="intervalLabel">15m</span>
-          </label>
-          <input type="range" min="1" max="4" value="2" id="sliderInterval" />
+          <!-- Right: Sliders -->
+          <div class="col-9">
+            <div
+              class="slider-group slider-group-horizontal"
+              id="intervalContainer"
+            >
+              <label for="sliderInterval">
+                <span id="intervalLabel">15m</span>
+              </label>
+              <input
+                type="range"
+                min="1"
+                max="4"
+                value="2"
+                id="sliderInterval"
+              />
+            </div>
+
+            <div
+              class="slider-group slider-group-horizontal"
+              id="dateRangeContainer"
+            >
+              <label for="sliderDateRanges">
+                Date Range: <span id="dateRangeLabel">1m</span>
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="4"
+                value="1"
+                id="sliderDateRanges"
+              />
+            </div>
+          </div>
+          <ul id="favoritesList" class="favorites-list"></ul>
         </div>
 
-        <div class="slider-group" id="dateRangeContainer">
-          <label for="sliderDateRanges">
-            Date Range: <span id="dateRangeLabel">1m</span>
-          </label>
-          <input type="range" min="0" max="4" value="1" id="sliderDateRanges" />
-        </div>
+        <!-- favorites -->
       </div>
     </div>
     <!-- favorites -->
