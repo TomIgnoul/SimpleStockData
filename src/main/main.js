@@ -213,15 +213,15 @@ function renderFavorites() {
       updateFavoriteButtonState();
     });
 
-    const removeBtn = document.createElement("button");
-    removeBtn.textContent = "Remove";
-    removeBtn.className = "btn btn-sm btn-outline-danger";
-    removeBtn.addEventListener("click", () => {
-      removeFromFavorites(ticker);
-    });
+    // const removeBtn = document.createElement("button");
+    // removeBtn.textContent = "Remove";
+    // removeBtn.className = "btn btn-sm btn-outline-danger";
+    // removeBtn.addEventListener("click", () => {
+    //   removeFromFavorites(ticker);
+    // });
 
     li.appendChild(span);
-    li.appendChild(removeBtn);
+    // li.appendChild(removeBtn);
     list.appendChild(li);
   });
 }
