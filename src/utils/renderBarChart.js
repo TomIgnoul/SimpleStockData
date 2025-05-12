@@ -26,6 +26,7 @@ export function renderBarChart(data) {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       scales: {
         x: {
           ticks: {

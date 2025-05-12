@@ -38,6 +38,8 @@ const tickerInput = document.getElementById("tickerTextBox");
 const searchButton = document.getElementById("btntickerTextBox");
 const addFavoriteButton = document.getElementById("addFavoriteButton");
 
+const intervaLlabel = document.getElementById("intervalLabel");
+
 //CHART SELECT
 let lastCandlestickData = null;
 
@@ -232,3 +234,18 @@ tickerInput.addEventListener("input", () => {
 // Initial render
 renderFavorites();
 updateFavoriteButtonState();
+
+//INTERVAL LABELS ON TOGGLE
+
+function showIntervalMode() {
+  intervalLabel.classList.remove("d-none");
+  dateRangeLabel.classList.add("d-none");
+}
+
+function showDateRangeMode() {
+  intervalLabel.classList.add("d-none");
+  dateRangeLabel.classList.remove("d-none");
+}
+
+toggleIntervalBtn.addEventListener("click", showIntervalMode);
+toggleDateRangeBtn.addEventListener("click", showDateRangeMode);

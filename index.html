@@ -7,26 +7,28 @@
     <title>StockData</title>
   </head>
   <body>
-    <div id="mainDiv" class="container">
+    <div id="mainDiv" class="container-fluid d-flex flex-column">
       <!--  Header -->
-      <div class="row">
-        <div class="col-12">
-          <header class="header">
-            <h1>📈 Simple Stock Data 📈</h1>
-          </header>
+      <!-- <div class="row"> -->
+        <div class="row header-row">
+          <div class="col-12">
+            <header class="header">
+              <h1>📈 Simple Stock Data 📈</h1>
+            </header>
+          </div>
         </div>
 
         <!-- Chart Area Group -->
 
         <!-- ChartTypeSelecotr & Searchfield / favorites -->
-
-        <div class="col-1">
+        <div class="row typeSelectorSearchfield-row">
+        <div class="col-2">
           <select id="ChartTypeSelector">
             <option value="line">Line</option>
             <option value="bar">Bar</option>
           </select>
         </div>
-        <div class="col-9">
+        <div class="col-8">
           <div class="SearchAndFavorites">
             <button id="addFavoriteButton" class="btn">
               <i class="bi bi-star"></i>
@@ -37,22 +39,25 @@
             </button>
           </div>
         </div>
+        </div>
 
         <!-- Actual Chart Canvas -->
-        <div class="col-12">
-          <div class="chart-wrapper">
-            <canvas id="chartCanvas"></canvas>
+        <div class="row canvas-row flex-grow-1">
+          <div class="col-12 d-flex flex-column">
+            <div class="chart-wrapper flex-grow-1 d-flex">
+              <canvas id="chartCanvas"></canvas>
+            </div>
           </div>
         </div>
 
         <!-- Slider Controls Group -->
         <!-- <div class="slider-group-wrapper"> -->
-        <div class="row">
+        <div class="row mode-switch-row">
           <!-- Left: Mode Switch -->
           <div class="col-2">
-            <div class="mode-switch">
-              <button id="toggleInterval" class="btn">Intraday</button>
-              <button id="toggleDateRange" class="btn">Date Range</button>
+            <div class="mode-switch btn-group">
+              <button id="toggleInterval" class="btn btn-light">Intraday</button>
+              <button id="toggleDateRange" class="btn btn-dark">Range</button>
             </div>
           </div>
 
@@ -63,7 +68,7 @@
               id="intervalContainer"
             >
               <label for="sliderInterval">
-                <span id="intervalLabel">15m</span>
+               
               </label>
               <input
                 type="range"
@@ -78,9 +83,7 @@
               class="slider-group slider-group-horizontal"
               id="dateRangeContainer"
             >
-              <label for="sliderDateRanges">
-                Date Range: <span id="dateRangeLabel">1m</span>
-              </label>
+              <label for="sliderDateRanges"></label>
               <input
                 type="range"
                 min="0"
@@ -90,10 +93,16 @@
               />
             </div>
           </div>
-          <ul id="favoritesList" class="favorites-list"></ul>
+          
+          <div class="col-1 d-flex flex-column justify-content-center align-items-start">
+            <span id="intervalLabel" class="mode-label">15m</span>
+            <span id="dateRangeLabel" class="mode-label d-none">1m</span>
+          </div>  
+          
         </div>
 
         <!-- favorites -->
+         <ul id="favoritesList" class="favorites-list"></ul>
       </div>
     </div>
     <!-- favorites -->
