@@ -157,7 +157,7 @@ canvas#chartCanvas {
   display: flex;
   flex-direction: column;
   margin: 0 !important;
-  padding: 1px;
+  padding: 0px !important;
   border: 1px solid;
 }
 
@@ -179,6 +179,33 @@ canvas#chartCanvas {
 .slider-group input[type="range"] {
   flex-grow: 1;
   width: 100%;
+}
+
+/* ========================
+   Slider Controls Group
+======================== */
+
+.favorites-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 10px;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.favorites-list li {
+  padding: 0.5rem 0.75rem;
+  background: #f1f1f1;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.favorites-list li:hover {
+  background: #e2e6ea;
 }
 
 /* ========================
