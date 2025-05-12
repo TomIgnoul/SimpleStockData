@@ -10,6 +10,7 @@ body {
 }
 
 .container {
+  height: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -24,8 +25,13 @@ body {
 }
 
 body,
-html,
+html {
+  height: 100dvh;
+}
+
 #mainDiv {
+  display: flex;
+  flex-direction: column;
   height: 100dvh;
 }
 
@@ -129,51 +135,67 @@ html,
 /* ========================
  Chart 
 ======================== */
+canvas#chartCanvas {
+  flex-grow: 1;
+  width: 100% !important;
+  height: 100% !important;
+}
+.canvas-row {
+  flex: 1 1 auto;
+}
 
 .chart-wrapper {
-  flex-grow: 1;
+  flex: 1 1 auto;
+  height: 100%;
+  display: flex;
+}
+/* ========================
+   Mode Switch for Sliders
+======================== */
+
+.mode-switch {
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  padding: 1px;
+  border: 1px solid;
+}
+
+#toggleDateRange,
+#toggleInterval {
+  padding: 0 !important;
 }
 
 /* ========================
    Slider Controls Group
 ======================== */
-
-/* Default: horizontal slider layout */
 .slider-group-horizontal {
   display: flex;
+  justify-content: center;
   flex-direction: column;
+  height: 100%;
+}
+
+.slider-group input[type="range"] {
+  flex-grow: 1;
+  width: 100%;
+}
+
+/* ========================
+   heights
+======================== */
+
+.header-row {
+  flex: 0 0 auto;
+  /* min-height: 60px; */
+  display: flex;
   align-items: center;
-  width: 100%;
-  margin-top: 1rem;
+  justify-content: center;
 }
 
-.slider-group-horizontal label {
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-.slider-group-horizontal input[type="range"] {
-  width: 100%;
-  max-width: 100%;
-}
-
-/* Optional: vertical layout for larger screens */
-@media (min-width: 769px) {
-  .slider-group-horizontal {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .slider-group-horizontal label {
-    margin-bottom: 0;
-    margin-right: 1rem;
-    width: 150px;
-    text-align: right;
-  }
-
-  .slider-group-horizontal input[type="range"] {
-    width: 100%;
-    flex-grow: 1;
-  }
+.typeSelectorSearchfield-row {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
