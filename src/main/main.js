@@ -21,7 +21,9 @@ const dateRanges = {
 };
 
 // ELEMENTS
-const chartTypeSelector = document.getElementById("ChartTypeSelector");
+// const chartTypeSelector = document.getElementById("ChartTypeSelector");
+const chartIcon = document.getElementById("chartIcon");
+// const currentChartTypeSpan = document.getElementById("currentChartTypeSpan");
 
 const sliderInterval = document.getElementById("sliderInterval");
 const intervalLabel = document.getElementById("intervalLabel");
@@ -40,13 +42,32 @@ const addFavoriteButton = document.getElementById("addFavoriteButton");
 
 const intervaLlabel = document.getElementById("intervalLabel");
 
-//CHART SELECT
+//CHART SELECT with dropdown menu
+
+let selectedChartType = "line"; // default
 let lastCandlestickData = null;
+
+document.querySelectorAll("#chartDropdown .dropdown-item").forEach((item) => {
+  item.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const chartType = item.getAttribute("data-value");
+    const iconClass = item.getAttribute("data-icon");
+    const labelText = item.textContent.trim();
+
+    selectedChartType = chartType;
+    chartIcon.className = `bi ${iconClass}`;
+
+    if (lastCandlestickData) {
+      renderChartByType(lastCandlestickData);
+    }
+  });
+});
 
 export function renderChartByType(candlestickData, options = {}) {
   lastCandlestickData = candlestickData;
 
-  const type = chartTypeSelector.value || "line";
+  const type = selectedChartType || "line";
   const chartData = transformToChart(candlestickData, "Close Price");
 
   if (type === "bar") {
@@ -55,12 +76,6 @@ export function renderChartByType(candlestickData, options = {}) {
     renderLineChart(chartData, options);
   }
 }
-
-chartTypeSelector.addEventListener("change", () => {
-  if (lastCandlestickData) {
-    renderChartByType(lastCandlestickData);
-  }
-});
 
 //CHART LOADERS BASED ON SLIDER STATES:
 
@@ -77,7 +92,7 @@ function loadDateRangeFromSlider() {
   dateRangeData(ticker, offsetDays);
 }
 
-// DEBOUNCED FUNCTIONS
+// DEBOUNCED FUNCTIONS TO ADD DELAY TO SLIDER
 const debounceIntradayData = debounce((ticker, interval) => {
   intradayData(ticker, interval);
 });
@@ -212,13 +227,6 @@ function renderFavorites() {
       tickerInput.value = ticker;
       updateFavoriteButtonState();
     });
-
-    // const removeBtn = document.createElement("button");
-    // removeBtn.textContent = "Remove";
-    // removeBtn.className = "btn btn-sm btn-outline-danger";
-    // removeBtn.addEventListener("click", () => {
-    //   removeFromFavorites(ticker);
-    // });
 
     li.appendChild(span);
     // li.appendChild(removeBtn);
