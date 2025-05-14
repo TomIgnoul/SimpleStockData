@@ -5,6 +5,7 @@ import { validateParams } from "../utils/validateParams.js";
 import { transformIntradayData } from "../utils/transformIntradayData.js";
 // import { renderChart } from "../utils/renderChart.js";
 import { renderChartByType } from "../main/main.js";
+import { populateIntradayTable } from "../utils/populateIntradayTable.js";
 
 export async function intradayData(ticker = "AAPL", interval = "15m") {
   try {
@@ -16,7 +17,7 @@ export async function intradayData(ticker = "AAPL", interval = "15m") {
 
     //transform rawdata to readible data for renderchart
     let chartData = transformIntradayData(rawData);
-
+    populateIntradayTable(rawData);
     renderChartByType(chartData);
   } catch (error) {
     console.error("failed to load intraday data:", error);
