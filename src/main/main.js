@@ -243,7 +243,18 @@ tickerInput.addEventListener("input", () => {
 renderFavorites();
 updateFavoriteButtonState();
 
-//INTERVAL LABELS ON TOGGLE
+//SLIDER CONTROL GROUP
+function showIntervalBtn() {
+  toggleIntervalBtn.classList.add("active");
+  toggleDateRangeBtn.classList.remove("active");
+}
+
+function showDateRangeBtn() {
+  toggleDateRangeBtn.classList.add("active");
+  toggleIntervalBtn.classList.remove("active");
+}
+
+//INTERVAL LABELS
 
 function showIntervalMode() {
   intervalLabel.classList.remove("d-none");
@@ -255,5 +266,12 @@ function showDateRangeMode() {
   dateRangeLabel.classList.remove("d-none");
 }
 
-toggleIntervalBtn.addEventListener("click", showIntervalMode);
-toggleDateRangeBtn.addEventListener("click", showDateRangeMode);
+toggleIntervalBtn.addEventListener("click", () => {
+  showIntervalBtn();
+  showIntervalMode();
+});
+
+toggleDateRangeBtn.addEventListener("click", () => {
+  showDateRangeBtn();
+  showDateRangeMode();
+});
