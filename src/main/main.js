@@ -83,7 +83,7 @@ searchButton.addEventListener("click", () => {
   intradayData(keyword, interval);
 });
 
-// ADD TO FAVORITES
+// ADD or REMOVE TO OR FROM FAVORITES
 
 function getFavorites() {
   return JSON.parse(localStorage.getItem("favorites") || "[]");
