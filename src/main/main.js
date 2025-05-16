@@ -9,7 +9,7 @@ import { dateRangeData } from "../init/dateRangeData";
 import { debounce } from "../utils/debounce";
 import { transformToChart } from "../utils/transformChartData";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { sortTableByDate } from "../utils/sortTableByDate";
+import { sortTableByDate } from "../utils/sortTableByDate.js";
 
 // INTERVAL + RANGE OPTIONS
 const intervals = ["1m", "5m", "15m", "30m", "60m"];
@@ -280,9 +280,8 @@ toggleDateRangeBtn.addEventListener("click", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (dateHeader) {
-    dateHeader.addEventListener("click", sortTableByDate);
-  } else {
-    console.warn("Element #dateHeader niet gevonden");
+  const header = document.getElementById("dateHeader");
+  if (header) {
+    header.addEventListener("click", sortTableByDate);
   }
 });

@@ -22,7 +22,7 @@ export function populateIntradayTable(data) {
 }
 
 export function formatDateForDisplay(dateString) {
-  console.log("Ruwe waarde ontvangen:", dateString);
+  // console.log("Raw date Data:", dateString);
 
   if (!dateString) return "–";
 
