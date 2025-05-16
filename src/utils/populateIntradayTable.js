@@ -10,7 +10,7 @@ export function populateIntradayTable(data) {
     return (
       html +
       `<tr>
-        <td>${item.Datetime}</td>
+        <td>${formatDateForDisplay(item.Datetime || item.Date)}</td>
         <td>${item.Open?.toFixed(2)}</td>
         <td>${item.High?.toFixed(2)}</td>
         <td>${item.Low?.toFixed(2)}</td>
@@ -19,4 +19,24 @@ export function populateIntradayTable(data) {
       </tr>`
     );
   }, "");
+}
+
+export function formatDateForDisplay(dateString) {
+  console.log("Ruwe waarde ontvangen:", dateString);
+
+  if (!dateString) return "–";
+
+  const parsed = new Date(dateString);
+
+  console.log("Parsed:", parsed);
+
+  if (isNaN(parsed)) return "Invalid date";
+
+  return parsed.toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 }

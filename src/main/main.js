@@ -9,6 +9,7 @@ import { dateRangeData } from "../init/dateRangeData";
 import { debounce } from "../utils/debounce";
 import { transformToChart } from "../utils/transformChartData";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { sortTableByDate } from "../utils/sortTableByDate";
 
 // INTERVAL + RANGE OPTIONS
 const intervals = ["1m", "5m", "15m", "30m", "60m"];
@@ -41,6 +42,8 @@ const searchButton = document.getElementById("btntickerTextBox");
 const addFavoriteButton = document.getElementById("addFavoriteButton");
 
 const intervaLlabel = document.getElementById("intervalLabel");
+
+const dateHeader = document.getElementById("dateHeader");
 
 //CHART SELECT with dropdown menu
 
@@ -274,4 +277,12 @@ toggleIntervalBtn.addEventListener("click", () => {
 toggleDateRangeBtn.addEventListener("click", () => {
   showDateRangeBtn();
   showDateRangeMode();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (dateHeader) {
+    dateHeader.addEventListener("click", sortTableByDate);
+  } else {
+    console.warn("Element #dateHeader niet gevonden");
+  }
 });
