@@ -21,17 +21,12 @@ export function populateIntradayTable(data) {
   }, "");
 }
 
-function formatDateForDisplay(dateString) {
-  console.log("Ruwe waarde ontvangen:", dateString);
-
+export function formatDateForDisplay(dateString) {
   if (!dateString) return "–";
 
-  // Probeer de ruwe string direct
   const parsed = new Date(dateString);
 
-  console.log("Parsed:", parsed);
-
-  if (isNaN(parsed)) return "Ongeldige datum";
+  if (isNaN(parsed)) return "Invalid date";
 
   return parsed.toLocaleString("en-GB", {
     day: "2-digit",

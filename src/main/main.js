@@ -9,6 +9,10 @@ import { dateRangeData } from "../init/dateRangeData";
 import { debounce } from "../utils/debounce";
 import { transformToChart } from "../utils/transformChartData";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import {
+  sortTableByVolume,
+  sortTableByDate,
+} from "../utils/sortTableByDate.js";
 
 // INTERVAL + RANGE OPTIONS
 const intervals = ["1m", "5m", "15m", "30m", "60m"];
@@ -21,9 +25,8 @@ const dateRanges = {
 };
 
 // ELEMENTS
-// const chartTypeSelector = document.getElementById("ChartTypeSelector");
+
 const chartIcon = document.getElementById("chartIcon");
-// const currentChartTypeSpan = document.getElementById("currentChartTypeSpan");
 
 const sliderInterval = document.getElementById("sliderInterval");
 const intervalLabel = document.getElementById("intervalLabel");
@@ -42,7 +45,12 @@ const addFavoriteButton = document.getElementById("addFavoriteButton");
 
 const intervaLlabel = document.getElementById("intervalLabel");
 
-//CHART SELECT with dropdown menu
+const dateHeader = document.getElementById("dateHeader");
+const volumeHeader = document.getElementById("volumeHeader");
+
+/* ========================
+   dropdownSearchfield
+======================== */
 
 let selectedChartType = "line"; // default
 let lastCandlestickData = null;
@@ -62,88 +70,6 @@ document.querySelectorAll("#chartDropdown .dropdown-item").forEach((item) => {
       renderChartByType(lastCandlestickData);
     }
   });
-});
-
-export function renderChartByType(candlestickData, options = {}) {
-  lastCandlestickData = candlestickData;
-
-  const type = selectedChartType || "line";
-  const chartData = transformToChart(candlestickData, "Close Price");
-
-  if (type === "bar") {
-    renderBarChart(chartData, options);
-  } else {
-    renderLineChart(chartData, options);
-  }
-}
-
-//CHART LOADERS BASED ON SLIDER STATES:
-
-function loadIntradayFromSlider() {
-  const ticker = tickerInput.value.trim().toUpperCase() || "AAPL";
-  const interval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
-  intradayData(ticker, interval);
-}
-
-function loadDateRangeFromSlider() {
-  const ticker = tickerInput.value.trim().toUpperCase() || "AAPL";
-  const selected = parseInt(sliderDateRanges.value, 10);
-  const offsetDays = dateRanges[selected]?.offset || 30;
-  dateRangeData(ticker, offsetDays);
-}
-
-// DEBOUNCED FUNCTIONS TO ADD DELAY TO SLIDER
-const debounceIntradayData = debounce((ticker, interval) => {
-  intradayData(ticker, interval);
-});
-
-const debounceDateRangeData = debounce((ticker, offset) => {
-  dateRangeData(ticker, offset);
-});
-
-// INITIAL CHART
-const defaultInterval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
-intradayData("AAPL", defaultInterval);
-
-// TOGGLE BEHAVIOR
-dateRangeContainer.style.display = "none";
-
-toggleIntervalBtn.addEventListener("click", () => {
-  intervalContainer.style.display = "block";
-  dateRangeContainer.style.display = "none";
-
-  loadIntradayFromSlider();
-});
-
-toggleDateRangeBtn.addEventListener("click", () => {
-  intervalContainer.style.display = "none";
-  dateRangeContainer.style.display = "block";
-
-  loadDateRangeFromSlider();
-});
-
-// SLIDER INTERVAL
-sliderInterval.addEventListener("input", () => {
-  const ticker = tickerInput.value || "AAPL";
-  const interval = intervals[parseInt(sliderInterval.value, 10)];
-
-  if (!interval) {
-    console.warn("Invalid interval selected.");
-    return;
-  }
-
-  intervalLabel.textContent = interval;
-  debounceIntradayData(ticker, interval);
-});
-
-// SLIDER DATE RANGE
-sliderDateRanges.addEventListener("input", () => {
-  const ticker = tickerInput.value.trim().toUpperCase() || "AAPL";
-  const selected = parseInt(sliderDateRanges.value, 10);
-  const offsetDays = dateRanges[selected]?.offset || 30;
-
-  dateRangeLabel.textContent = dateRanges[selected].label || "1m";
-  debounceDateRangeData(ticker, offsetDays);
 });
 
 // SEARCH BUTTON
@@ -243,6 +169,92 @@ tickerInput.addEventListener("input", () => {
 renderFavorites();
 updateFavoriteButtonState();
 
+// TOGGLE BEHAVIOR
+dateRangeContainer.style.display = "none";
+
+toggleIntervalBtn.addEventListener("click", () => {
+  intervalContainer.style.display = "block";
+  dateRangeContainer.style.display = "none";
+
+  loadIntradayFromSlider();
+});
+
+toggleDateRangeBtn.addEventListener("click", () => {
+  intervalContainer.style.display = "none";
+  dateRangeContainer.style.display = "block";
+
+  loadDateRangeFromSlider();
+});
+
+export function renderChartByType(candlestickData, options = {}) {
+  lastCandlestickData = candlestickData;
+
+  const type = selectedChartType || "line";
+  const chartData = transformToChart(candlestickData, "Close Price");
+
+  if (type === "bar") {
+    renderBarChart(chartData, options);
+  } else {
+    renderLineChart(chartData, options);
+  }
+}
+
+/* ========================
+   Mode Switch for Sliders
+======================== */
+
+function loadIntradayFromSlider() {
+  const ticker = tickerInput.value.trim().toUpperCase() || "AAPL";
+  const interval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
+  intradayData(ticker, interval);
+}
+
+function loadDateRangeFromSlider() {
+  const ticker = tickerInput.value.trim().toUpperCase() || "AAPL";
+  const selected = parseInt(sliderDateRanges.value, 10);
+  const offsetDays = dateRanges[selected]?.offset || 30;
+  dateRangeData(ticker, offsetDays);
+}
+
+// DEBOUNCED FUNCTIONS TO ADD DELAY TO SLIDER
+const debounceIntradayData = debounce((ticker, interval) => {
+  intradayData(ticker, interval);
+});
+
+const debounceDateRangeData = debounce((ticker, offset) => {
+  dateRangeData(ticker, offset);
+});
+
+/* ========================
+ Chart 
+======================== */
+const defaultInterval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
+intradayData("AAPL", defaultInterval);
+
+// SLIDER INTERVAL
+sliderInterval.addEventListener("input", () => {
+  const ticker = tickerInput.value || "AAPL";
+  const interval = intervals[parseInt(sliderInterval.value, 10)];
+
+  if (!interval) {
+    console.warn("Invalid interval selected.");
+    return;
+  }
+
+  intervalLabel.textContent = interval;
+  debounceIntradayData(ticker, interval);
+});
+
+// SLIDER DATE RANGE
+sliderDateRanges.addEventListener("input", () => {
+  const ticker = tickerInput.value.trim().toUpperCase() || "AAPL";
+  const selected = parseInt(sliderDateRanges.value, 10);
+  const offsetDays = dateRanges[selected]?.offset || 30;
+
+  dateRangeLabel.textContent = dateRanges[selected].label || "1m";
+  debounceDateRangeData(ticker, offsetDays);
+});
+
 //SLIDER CONTROL GROUP
 function showIntervalBtn() {
   toggleIntervalBtn.classList.add("active");
@@ -274,4 +286,14 @@ toggleIntervalBtn.addEventListener("click", () => {
 toggleDateRangeBtn.addEventListener("click", () => {
   showDateRangeBtn();
   showDateRangeMode();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (dateHeader) {
+    dateHeader.addEventListener("click", sortTableByDate);
+  }
+
+  if (volumeHeader) {
+    volumeHeader.addEventListener("click", sortTableByVolume);
+  }
 });

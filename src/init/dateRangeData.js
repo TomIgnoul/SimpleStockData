@@ -1,8 +1,8 @@
 import { StockRepository } from "../api/stockRepository";
-// import { renderChart } from "../utils/renderChart";
 import { transformDateRangeData } from "../utils/transformDateRangeData";
 import { renderChartByType } from "../main/main.js";
 import { populateIntradayTable } from "../utils/populateIntradayTable.js";
+import { setDataForSorting } from "../utils/sortTableByDate.js";
 
 export async function dateRangeData(ticker, offsetDays) {
   try {
@@ -16,14 +16,14 @@ export async function dateRangeData(ticker, offsetDays) {
     const endDate = formatDate(end);
 
     const stockRepo = new StockRepository();
-    const rawData = await stockRepo.fetchDateRangeData(
-      ticker,
-      startDate,
-      endDate
-    );
-    let chartData = transformDateRangeData(rawData);
+    const rawData = await stockRepo.fetchDateRangeData(ticker, startDate, endDate);
+
+    const chartData = transformDateRangeData(rawData);
+
     populateIntradayTable(rawData);
-    renderChartByType(chartData);
+    setDataForSorting(rawData);    
+    renderChartByType(chartData);        
+
   } catch (error) {
     console.error("failed to load date range data:", error);
   }
