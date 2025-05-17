@@ -23,7 +23,6 @@ export async function dateRangeData(ticker, offsetDays) {
     );
 
     const chartData = transformDateRangeData(rawData);
-
     populateStockTable(rawData);
     setDataForSorting(rawData);
     renderChartByType(chartData);

@@ -22,13 +22,9 @@ export function populateStockTable(data) {
 }
 
 export function formatDateForDisplay(dateString) {
-  // console.log("Raw date Data:", dateString);
-
   if (!dateString) return "–";
 
   const parsed = new Date(dateString);
-
-  console.log("Parsed:", parsed);
 
   if (isNaN(parsed)) return "Invalid date";
 
