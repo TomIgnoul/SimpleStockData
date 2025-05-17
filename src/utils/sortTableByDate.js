@@ -1,4 +1,4 @@
-import { populateIntradayTable } from "../utils/populateIntradayTable.js";
+import { populateStockTable } from "../utils/populateStockTable.js";
 
 let currentData = [];
 let sortAscending = false;
@@ -12,7 +12,7 @@ export function sortTableByDate() {
   });
 
   sortAscending = !sortAscending; // wissel richting
-  populateIntradayTable(sorted);
+  populateStockTable(sorted);
 }
 
 export function setDataForSorting(data) {
@@ -28,5 +28,5 @@ export function sortTableByVolume() {
   });
 
   sortAscending = !sortAscending; // wissel richting
-  populateIntradayTable(sorted);
+  populateStockTable(sorted);
 }

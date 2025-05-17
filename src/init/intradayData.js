@@ -5,7 +5,7 @@ import { validateParams } from "../utils/validateParams.js";
 import { transformIntradayData } from "../utils/transformIntradayData.js";
 // import { renderChart } from "../utils/renderChart.js";
 import { renderChartByType } from "../main/main.js";
-import { populateIntradayTable } from "../utils/populateIntradayTable.js";
+import { populateStockTable } from "../utils/populateStockTable.js";
 import { setDataForSorting } from "../utils/sortTableByDate.js";
 
 export async function intradayData(ticker = "AAPL", interval = "15m") {
@@ -18,7 +18,7 @@ export async function intradayData(ticker = "AAPL", interval = "15m") {
 
     //transform rawdata to readible data for renderchart
     let chartData = transformIntradayData(rawData);
-    populateIntradayTable(rawData);
+    populateStockTable(rawData);
     setDataForSorting(rawData);
     renderChartByType(chartData);
   } catch (error) {
