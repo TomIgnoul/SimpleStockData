@@ -1,4 +1,4 @@
-export function populateIntradayTable(data) {
+export function populateStockTable(data) {
   const tableBody = document.getElementById("dataTableBody");
 
   if (!Array.isArray(data) || data.length === 0) {
