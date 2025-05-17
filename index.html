@@ -7,22 +7,24 @@
     <title>StockData</title>
   </head>
   <body>
-    <div id="mainDiv" class="container-fluid d-flex flex-column bg-body">
-      <!--  Header -->
-      <!-- <div class="row"> -->
-      <div class="row header-row align-items-center">
-        <div class="col-12 position-relative text-center">
-          <!-- <header class="header"> -->
+    <div class="outer-wrapper">
+      <div id="mainDiv" class="container-fluid d-flex flex-column bg-body">
+        <!--  Header -->
+        <!-- <div class="row"> -->
+        <div class="row header-row align-items-center">
+          <div class="col-12 position-relative text-center">
+            <!-- <header class="header"> -->
             <h1>Simple Stock Data</h1>
-          <!-- </header> -->
+            <!-- </header> -->
             <button
               id="themeToggle"
-              class="btn border-0 btn-outline-light position-absolute top-50 end-0 translate-middle-y me-3  "
-              aria-label="Toggle Theme">
-                <i class="bi bi-moon textj-body"></i>
+              class="btn border-0 btn-outline-light position-absolute top-50 end-0 translate-middle-y me-3"
+              aria-label="Toggle Theme"
+            >
+              <i class="bi bi-moon textj-body"></i>
             </button>
+          </div>
         </div>
-      </div>
 
         <!-- ChartTypeSelecotr & Searchfield / favorites -->
         <div class="row dropdownSearchfield-row">
@@ -102,7 +104,9 @@
           </div>
 
           <!-- Slider -->
-          <div class="col-8">
+          <div
+            class="col-8 d-flex flex-column justify-content-center align-items-center"
+          >
             <div
               class="slider-group slider-group-horizontal"
               id="intervalContainer"
@@ -147,22 +151,27 @@
             ></ul>
           </div>
         </div>
-      </div>
 
-      <div id="tableDiv" class="container py4">
-        <table class="table-responsive table-bordered" id="table">
-          <thead>
-            <tr>
-              <th scope="col" id="dateHeader">Date↑↓</th>
-              <th scope="col">Open</th>
-              <th scope="col">High</th>
-              <th scope="col">Low</th>
-              <th scope="col">Close</th>
-              <th scope="col" id="volumeHeader">Volume↑↓</th>
-            </tr>
-          </thead>
-          <tbody id="dataTableBody"></tbody>
-        </table>
+        <!-- Table Section -->
+        <div class="row flex-grow-1 overflow-auto" id="tableDiv">
+          <div class="col-12">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="table">
+                <thead>
+                  <tr>
+                    <th scope="col" id="dateHeader">Date↑↓</th>
+                    <th scope="col">Open</th>
+                    <th scope="col">High</th>
+                    <th scope="col">Low</th>
+                    <th scope="col">Close</th>
+                    <th scope="col" id="volumeHeader">Volume↑↓</th>
+                  </tr>
+                </thead>
+                <tbody id="dataTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
