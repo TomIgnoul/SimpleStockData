@@ -29,6 +29,12 @@ html {
   height: 100dvh;
 }
 
+.outer-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
 #mainDiv {
   display: flex;
   flex-direction: column;
@@ -165,9 +171,15 @@ canvas#chartCanvas {
 }
 
 .chart-wrapper {
-  flex: 1 1 auto;
+  position: relative;
+  margin: auto;
+  height: 80vh;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  /* flex: 1 1 auto;
   height: 100%;
-  display: flex;
+  display: flex; */
 }
 /* ========================
    Mode Switch for Sliders
@@ -208,6 +220,10 @@ canvas#chartCanvas {
   justify-content: center;
   flex-direction: column;
   height: 100%;
+  max-width: 525px;
+}
+.slider-group {
+  width: 100%;
 }
 
 .slider-group input[type="range"] {
@@ -228,6 +244,7 @@ canvas#chartCanvas {
   margin-bottom: 10px;
   gap: 0.5rem;
   list-style: none;
+  min-height: 2.5rem;
 }
 
 .favorites-list li {
@@ -253,6 +270,7 @@ canvas#chartCanvas {
   flex-direction: column;
   background-color: var(--bs-body-bg);
   overflow-x: auto;
+  min-height: 600px;
 }
 
 #table {
