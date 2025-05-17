@@ -11,10 +11,10 @@ export function populateStockTable(data) {
       html +
       `<tr>
         <td>${formatDateForDisplay(item.Datetime || item.Date)}</td>
-        <td>${item.Open?.toFixed(2)}</td>
-        <td>${item.High?.toFixed(2)}</td>
-        <td>${item.Low?.toFixed(2)}</td>
-        <td>${item.Close?.toFixed(2)}</td>
+        <td>${item.Open?.toFixed(1)}</td>
+        <td>${item.High?.toFixed(1)}</td>
+        <td>${item.Low?.toFixed(1)}</td>
+        <td>${item.Close?.toFixed(1)}</td>
         <td>${item.Volume?.toLocaleString()}</td>
       </tr>`
     );

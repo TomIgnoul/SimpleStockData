@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,44 +7,74 @@
     <title>StockData</title>
   </head>
   <body>
-    <div id="mainDiv" class="container-fluid d-flex flex-column">
+    <div id="mainDiv" class="container-fluid d-flex flex-column bg-body">
       <!--  Header -->
       <!-- <div class="row"> -->
-        <div class="row header-row">
-          <div class="col-12">
-            <header class="header">
-              <h1>📈 Simple Stock Data 📈</h1>
-            </header>
-          </div>
+      <div class="row header-row align-items-center">
+        <div class="col-12 position-relative text-center">
+          <!-- <header class="header"> -->
+            <h1>Simple Stock Data</h1>
+          <!-- </header> -->
+            <button
+              id="themeToggle"
+              class="btn border-0 btn-outline-light position-absolute top-50 end-0 translate-middle-y me-3  "
+              aria-label="Toggle Theme">
+                <i class="bi bi-moon textj-body"></i>
+            </button>
         </div>
-
-
+      </div>
 
         <!-- ChartTypeSelecotr & Searchfield / favorites -->
-        <div class="row dropdownSearchfield-row">  
+        <div class="row dropdownSearchfield-row">
           <div class="col-2 d-flex align-items justify-content-center">
             <div class="dropdown" id="chartDropdown">
-              <button class="btn custom-btn dropdown-toggle align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <button
+                class="btn custom-btn dropdown-toggle align-items-center gap-2"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 <i id="chartIcon" class="bi bi-graph-up"></i>
                 <span id="currentChartType"></span>
               </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#" data-value="line" data-icon="bi-graph-up"><i class="bi bi-graph-up"></i></a></li>
-              <li><a class="dropdown-item" href="#" data-value="bar" data-icon="bi-bar-chart-fill"><i class="bi bi-bar-chart"></i> </a></li>
-            </ul>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-value="line"
+                    data-icon="bi-graph-up"
+                    ><i class="bi bi-graph-up"></i
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-value="bar"
+                    data-icon="bi-bar-chart-fill"
+                    ><i class="bi bi-bar-chart"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-        <div class="col-8">
-          <div class="SearchAndFavorites">
-            <button id="addFavoriteButton" class="btn">
-              <i class="bi bi-star"></i>
-            </button>
-            <input type="text" value="AAPL" id="tickerTextBox" class="input" />
-            <button id="btntickerTextBox" class="btn">
-              <i class="bi bi-search"></i>
-            </button>
+          <div class="col-8">
+            <div class="SearchAndFavorites">
+              <button id="addFavoriteButton" class="btn">
+                <i class="bi bi-star"></i>
+              </button>
+              <input
+                type="text"
+                value="AAPL"
+                id="tickerTextBox"
+                class="input"
+              />
+              <button id="btntickerTextBox" class="btn">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
           </div>
-        </div>
         </div>
 
         <!-- Actual Chart Canvas -->
@@ -60,9 +90,13 @@
         <!-- <div class="slider-group-wrapper"> -->
         <div class="row mode-switch-row">
           <!-- Mode Switch -->
-          <div class="col-2 d-flex flex-column justify-content-center h-100 p-0">
+          <div
+            class="col-2 d-flex flex-column justify-content-center h-100 p-0"
+          >
             <div class="mode-switch btn-group">
-              <button id="toggleInterval" class="btn mode-label active">Intraday</button>
+              <button id="toggleInterval" class="btn mode-label active">
+                Intraday
+              </button>
               <button id="toggleDateRange" class="btn mode-label">Range</button>
             </div>
           </div>
@@ -73,9 +107,7 @@
               class="slider-group slider-group-horizontal"
               id="intervalContainer"
             >
-              <label for="sliderInterval">
-               
-              </label>
+              <label for="sliderInterval"> </label>
               <input
                 type="range"
                 min="1"
@@ -99,42 +131,42 @@
               />
             </div>
           </div>
-          
-          <div class="col-2 d-flex flex-column justify-content-center ">
+
+          <div class="col-2 d-flex flex-column justify-content-center">
             <span id="intervalLabel" class="mode-label">15m</span>
             <span id="dateRangeLabel" class="mode-label d-none">1m</span>
-          </div>  
-          
+          </div>
         </div>
 
         <!-- favorites -->
-         <div class="row favorites-row">
+        <div class="row favorites-row">
           <div class="col-12">
-         <ul id="favoritesList" class="favorites-list d-flex flex-wrap gap-2 justify-content-center"></ul>
-         </div>
-         </div>
+            <ul
+              id="favoritesList"
+              class="favorites-list d-flex flex-wrap gap-2 justify-content-center"
+            ></ul>
+          </div>
+        </div>
+      </div>
+
+      <div id="tableDiv" class="container py4">
+        <table class="table-responsive table-bordered" id="table">
+          <thead>
+            <tr>
+              <th scope="col" id="dateHeader">Date↑↓</th>
+              <th scope="col">Open</th>
+              <th scope="col">High</th>
+              <th scope="col">Low</th>
+              <th scope="col">Close</th>
+              <th scope="col" id="volumeHeader">Volume↑↓</th>
+            </tr>
+          </thead>
+          <tbody id="dataTableBody"></tbody>
+        </table>
       </div>
     </div>
 
-    <div id="tableDiv" class="container py4" >
-      <table class="table-responsive table-bordered" id="table">
-  <thead>
-    <tr>
-      <th scope="col" id="dateHeader">Date↑↓</th>
-      <th scope="col">Open</th>
-      <th scope="col">High</th>
-      <th scope="col">Low</th>
-      <th scope="col">Close</th>
-      <th scope="col" id="volumeHeader">Volume↑↓</th>
-    </tr>
-  </thead>
-  <tbody id="dataTableBody">
-
-  </tbody>
-</table>
-    </div>
-
-
+    <script src="/theme-toggle.js"></script>
     <script type="module" src="/src/main/main.js"></script>
   </body>
 </html>
