@@ -1,31 +1,38 @@
 "use strict";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-// import { Chart } from "chart.js";
+import "bootstrap-icons/font/bootstrap-icons.css";
+
+// Utils
+import { transformToChart } from "../utils/transformChartData";
 import { renderLineChart } from "../utils/renderLineChart";
 import { renderBarChart } from "../utils/renderBarChart";
-import { intradayData } from "../init/intradayData";
-import { dateRangeData } from "../init/dateRangeData";
-import { debounce } from "../utils/debounce";
-import { transformToChart } from "../utils/transformChartData";
-import "bootstrap-icons/font/bootstrap-icons.css";
+import { renderChartByType } from "../utils/chartRenderer.js";
 import {
   sortTableByVolume,
   sortTableByDate,
 } from "../utils/sortTableByDate.js";
 
-// INTERVAL + RANGE OPTIONS
-const intervals = ["1m", "5m", "15m", "30m", "60m"];
-const dateRanges = {
-  0: { label: "7d", offset: 7 },
-  1: { label: "1m", offset: 30 },
-  2: { label: "3m", offset: 90 },
-  3: { label: "6m", offset: 180 },
-  4: { label: "1y", offset: 365 },
-};
+// UI Modules
+import { initThemeToggle } from "../ui/themeToggle.js";
+import { initChartTypeToggle } from "../ui/chartTypeToggle.js";
+import { initSliderControls } from "../ui/sliderControls.js";
+import {
+  updateFavoriteButtonState,
+  toggleFavorites,
+  renderFavorites,
+} from "../ui/favorites.js";
 
-// ELEMENTS
+// Store
+import {
+  setSelectedChartType,
+  getLastCandlestickData,
+} from "../store/chartStore.js";
 
+// Data fetching
+import { intradayData } from "../init/intradayData";
+
+// DOM Elements
 const chartIcon = document.getElementById("chartIcon");
 
 const sliderInterval = document.getElementById("sliderInterval");
@@ -40,284 +47,89 @@ const intervalContainer = document.getElementById("intervalContainer");
 const dateRangeContainer = document.getElementById("dateRangeContainer");
 
 const tickerInput = document.getElementById("tickerTextBox");
-const searchButton = document.getElementById("btntickerTextBox");
 const addFavoriteButton = document.getElementById("addFavoriteButton");
-
-const intervaLlabel = document.getElementById("intervalLabel");
+const favoritesList = document.getElementById("favoritesList");
+const searchButton = document.getElementById("btntickerTextBox");
 
 const dateHeader = document.getElementById("dateHeader");
 const volumeHeader = document.getElementById("volumeHeader");
 
-/* ========================
-   dropdownSearchfield
-======================== */
-
-let selectedChartType = "line"; // default
-let lastCandlestickData = null;
-
-document.querySelectorAll("#chartDropdown .dropdown-item").forEach((item) => {
-  item.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const chartType = item.getAttribute("data-value");
-    const iconClass = item.getAttribute("data-icon");
-    const labelText = item.textContent.trim();
-
-    selectedChartType = chartType;
-    chartIcon.className = `bi ${iconClass}`;
-
-    if (lastCandlestickData) {
-      renderChartByType(lastCandlestickData);
-    }
-  });
-});
-
-// SEARCH BUTTON
+// --- Search Button ---
 searchButton.addEventListener("click", () => {
-  const keyword = tickerInput.value.trim();
-  if (!keyword) {
-    console.warn("No ticker entered.");
-    return;
-  }
-  const interval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
+  const keyword = tickerInput.value.trim().toUpperCase();
+  if (!keyword) return;
+  const interval =
+    ["1m", "5m", "15m", "30m", "60m"][parseInt(sliderInterval.value, 10)] ||
+    "15m";
   intradayData(keyword, interval);
 });
 
-// ADD or REMOVE TO OR FROM FAVORITES
-
-function getFavorites() {
-  return JSON.parse(localStorage.getItem("favorites") || "[]");
-}
-
-function updateFavoriteButtonState() {
-  const ticker = tickerInput.value.trim().toUpperCase();
-  const favorites = getFavorites();
-  const icon = addFavoriteButton.querySelector("i");
-
-  if (favorites.includes(ticker)) {
-    icon.className = "bi bi-star-fill";
-    addFavoriteButton.setAttribute("data-mode", "remove");
-  } else {
-    icon.className = "bi bi-star";
-    addFavoriteButton.setAttribute("data-mode", "add");
+tickerInput.addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    searchButton.click();
   }
-}
-
-addFavoriteButton.addEventListener("click", () => {
-  requestAnimationFrame(() => {
-    const ticker = tickerInput.value.trim().toUpperCase();
-    if (!ticker) return;
-
-    const mode = addFavoriteButton.getAttribute("data-mode");
-
-    if (mode === "remove") {
-      removeFromFavorites(ticker);
-    } else {
-      const favorites = getFavorites();
-      if (!favorites.includes(ticker)) {
-        favorites.push(ticker);
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        console.log(`Added ${ticker}`);
-        renderFavorites();
-      }
-    }
-
-    updateFavoriteButtonState();
-  });
 });
 
-function removeFromFavorites(ticker) {
-  const favorites = getFavorites();
-  const updated = favorites.filter((item) => item !== ticker);
-  localStorage.setItem("favorites", JSON.stringify(updated));
-  updateFavoriteButtonState();
-  renderFavorites();
-}
-
-function renderFavorites() {
-  const favorites = getFavorites();
-  const list = document.getElementById("favoritesList");
-  list.innerHTML = "";
-
-  favorites.forEach((ticker) => {
-    const li = document.createElement("li");
-    li.className =
-      "list-group-item d-flex justify-content-between align-items-center";
-
-    const span = document.createElement("span");
-    span.textContent = ticker;
-    span.style.cursor = "pointer";
-    span.addEventListener("click", () => {
-      const interval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
-      intradayData(ticker, interval);
-      tickerInput.value = ticker;
-      updateFavoriteButtonState();
-    });
-
-    li.appendChild(span);
-    // li.appendChild(removeBtn);
-    list.appendChild(li);
-  });
-}
-
-// Trigger state update when typing in input
-tickerInput.addEventListener("input", () => {
-  updateFavoriteButtonState();
-});
-
-// Initial render
-renderFavorites();
-updateFavoriteButtonState();
-
-// TOGGLE BEHAVIOR
-dateRangeContainer.style.display = "none";
-
-toggleIntervalBtn.addEventListener("click", () => {
-  intervalContainer.style.display = "block";
-  dateRangeContainer.style.display = "none";
-
-  loadIntradayFromSlider();
-});
-
-toggleDateRangeBtn.addEventListener("click", () => {
-  intervalContainer.style.display = "none";
-  dateRangeContainer.style.display = "block";
-
-  loadDateRangeFromSlider();
-});
-
-export function renderChartByType(candlestickData, options = {}) {
-  lastCandlestickData = candlestickData;
-
-  const type = selectedChartType || "line";
-  const chartData = transformToChart(candlestickData, "Close Price");
-
-  if (type === "bar") {
-    renderBarChart(chartData, options);
-  } else {
-    renderLineChart(chartData, options);
-  }
-}
-
-/* ========================
-   Mode Switch for Sliders
-======================== */
-
-function loadIntradayFromSlider() {
-  const ticker = tickerInput.value.trim().toUpperCase() || "AAPL";
-  const interval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
-  intradayData(ticker, interval);
-}
-
-function loadDateRangeFromSlider() {
-  const ticker = tickerInput.value.trim().toUpperCase() || "AAPL";
-  const selected = parseInt(sliderDateRanges.value, 10);
-  const offsetDays = dateRanges[selected]?.offset || 30;
-  dateRangeData(ticker, offsetDays);
-}
-
-// DEBOUNCED FUNCTIONS TO ADD DELAY TO SLIDER
-const debounceIntradayData = debounce((ticker, interval) => {
-  intradayData(ticker, interval);
-});
-
-const debounceDateRangeData = debounce((ticker, offset) => {
-  dateRangeData(ticker, offset);
-});
-
-/* ========================
- Chart 
-======================== */
-const defaultInterval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
-intradayData("AAPL", defaultInterval);
-
-// SLIDER INTERVAL
-sliderInterval.addEventListener("input", () => {
-  const ticker = tickerInput.value || "AAPL";
-  const interval = intervals[parseInt(sliderInterval.value, 10)];
-
-  if (!interval) {
-    console.warn("Invalid interval selected.");
-    return;
-  }
-
-  intervalLabel.textContent = interval;
-  debounceIntradayData(ticker, interval);
-});
-
-// SLIDER DATE RANGE
-sliderDateRanges.addEventListener("input", () => {
-  const ticker = tickerInput.value.trim().toUpperCase() || "AAPL";
-  const selected = parseInt(sliderDateRanges.value, 10);
-  const offsetDays = dateRanges[selected]?.offset || 30;
-
-  dateRangeLabel.textContent = dateRanges[selected].label || "1m";
-  debounceDateRangeData(ticker, offsetDays);
-});
-
-//SLIDER CONTROL GROUP
-function showIntervalBtn() {
-  toggleIntervalBtn.classList.add("active");
-  toggleDateRangeBtn.classList.remove("active");
-}
-
-function showDateRangeBtn() {
-  toggleDateRangeBtn.classList.add("active");
-  toggleIntervalBtn.classList.remove("active");
-}
-
-//INTERVAL LABELS
-
-function showIntervalMode() {
-  intervalLabel.classList.remove("d-none");
-  dateRangeLabel.classList.add("d-none");
-}
-
-function showDateRangeMode() {
-  intervalLabel.classList.add("d-none");
-  dateRangeLabel.classList.remove("d-none");
-}
-
-toggleIntervalBtn.addEventListener("click", () => {
-  showIntervalBtn();
-  showIntervalMode();
-});
-
-toggleDateRangeBtn.addEventListener("click", () => {
-  showDateRangeBtn();
-  showDateRangeMode();
-});
-
+// --- DOM  ---
 document.addEventListener("DOMContentLoaded", () => {
-  // === Date and Volume sorting function
-  if (dateHeader) {
-    dateHeader.addEventListener("click", sortTableByDate);
+  // Theme
+  initThemeToggle();
+
+  // Chart Type Toggle
+  initChartTypeToggle(chartIcon, setSelectedChartType, () => {
+    const latestData = getLastCandlestickData();
+    if (latestData) renderChartByType(latestData);
+  });
+
+  // Favorites
+  function fetchCurrentIntervalData() {
+    const interval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
+    intradayData(tickerInput.value.trim().toUpperCase(), interval);
   }
 
-  if (volumeHeader) {
-    volumeHeader.addEventListener("click", sortTableByVolume);
-  }
+  renderFavorites(
+    favoritesList,
+    tickerInput,
+    fetchCurrentIntervalData,
+    updateFavoriteButtonState
+  );
 
-  // === Theme toggle ===
-  const toggleBtn = document.getElementById("themeToggle");
-  if (toggleBtn) {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    document.documentElement.setAttribute("data-bs-theme", savedTheme);
-    toggleBtn.innerHTML =
-      savedTheme === "dark"
-        ? '<i class="bi bi-sun"></i>'
-        : '<i class="bi bi-moon"></i>';
+  updateFavoriteButtonState(tickerInput, addFavoriteButton);
+  toggleFavorites(tickerInput, addFavoriteButton, () => {
+    renderFavorites(
+      favoritesList,
+      tickerInput,
+      () => {
+        const interval =
+          ["1m", "5m", "15m", "30m", "60m"][
+            parseInt(sliderInterval.value, 10)
+          ] || "15m";
+        intradayData(tickerInput.value.trim().toUpperCase(), interval);
+      },
+      updateFavoriteButtonState
+    );
+  });
 
-    toggleBtn.addEventListener("click", () => {
-      const currentTheme =
-        document.documentElement.getAttribute("data-bs-theme");
-      const newTheme = currentTheme === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-bs-theme", newTheme);
-      localStorage.setItem("theme", newTheme);
-      toggleBtn.innerHTML =
-        newTheme === "dark"
-          ? '<i class="bi bi-sun"></i>'
-          : '<i class="bi bi-moon"></i>';
-    });
-  }
+  // Chart sliders
+  initSliderControls({
+    sliderInterval,
+    sliderDateRanges,
+    intervalLabel,
+    dateRangeLabel,
+    toggleIntervalBtn,
+    toggleDateRangeBtn,
+    intervalContainer,
+    dateRangeContainer,
+    tickerInput,
+  });
+
+  // Table sort
+  if (dateHeader) dateHeader.addEventListener("click", sortTableByDate);
+  if (volumeHeader) volumeHeader.addEventListener("click", sortTableByVolume);
+
+  // Live update favorite star
+  tickerInput.addEventListener("input", () => {
+    updateFavoriteButtonState(tickerInput, addFavoriteButton);
+  });
 });

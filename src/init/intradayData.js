@@ -4,7 +4,7 @@ import { StockRepository } from "../api/stockRepository";
 import { validateParams } from "../utils/validateParams.js";
 import { transformIntradayData } from "../utils/transformIntradayData.js";
 // import { renderChart } from "../utils/renderChart.js";
-import { renderChartByType } from "../main/main.js";
+import { renderChartByType } from "../utils/chartRenderer.js";
 import { populateStockTable } from "../utils/populateStockTable.js";
 import { setDataForSorting } from "../utils/sortTableByDate.js";
 
