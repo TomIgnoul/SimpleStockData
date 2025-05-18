@@ -1,6 +1,6 @@
 import { StockRepository } from "../api/stockRepository";
 import { transformDateRangeData } from "../utils/transformDateRangeData";
-import { renderChartByType } from "../main/main.js";
+import { renderChartByType } from "../utils/chartRenderer.js";
 import { populateStockTable } from "../utils/populateStockTable.js";
 import { setDataForSorting } from "../utils/sortTableByDate.js";
 
