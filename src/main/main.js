@@ -13,6 +13,14 @@ import {
   sortTableByVolume,
   sortTableByDate,
 } from "../utils/sortTableByDate.js";
+//==
+import { initThemeToggle } from "../ui/themeToggle.js";
+import {
+  updateFavoriteButtonState,
+  toggleFavorites,
+  removeFromFavorites,
+  renderFavorites,
+} from "../ui/favorites.js";
 
 // INTERVAL + RANGE OPTIONS
 const intervals = ["1m", "5m", "15m", "30m", "60m"];
@@ -40,8 +48,10 @@ const intervalContainer = document.getElementById("intervalContainer");
 const dateRangeContainer = document.getElementById("dateRangeContainer");
 
 const tickerInput = document.getElementById("tickerTextBox");
-const searchButton = document.getElementById("btntickerTextBox");
 const addFavoriteButton = document.getElementById("addFavoriteButton");
+const favoritesList = document.getElementById("favoritesList");
+
+const searchButton = document.getElementById("btntickerTextBox");
 
 const intervaLlabel = document.getElementById("intervalLabel");
 
@@ -85,89 +95,17 @@ searchButton.addEventListener("click", () => {
 
 // ADD or REMOVE TO OR FROM FAVORITES
 
-function getFavorites() {
-  return JSON.parse(localStorage.getItem("favorites") || "[]");
-}
+// updateFavoriteButtonState(tickerInput, addFavoriteButton);
 
-function updateFavoriteButtonState() {
-  const ticker = tickerInput.value.trim().toUpperCase();
-  const favorites = getFavorites();
-  const icon = addFavoriteButton.querySelector("i");
-
-  if (favorites.includes(ticker)) {
-    icon.className = "bi bi-star-fill";
-    addFavoriteButton.setAttribute("data-mode", "remove");
-  } else {
-    icon.className = "bi bi-star";
-    addFavoriteButton.setAttribute("data-mode", "add");
-  }
-}
-
-addFavoriteButton.addEventListener("click", () => {
-  requestAnimationFrame(() => {
-    const ticker = tickerInput.value.trim().toUpperCase();
-    if (!ticker) return;
-
-    const mode = addFavoriteButton.getAttribute("data-mode");
-
-    if (mode === "remove") {
-      removeFromFavorites(ticker);
-    } else {
-      const favorites = getFavorites();
-      if (!favorites.includes(ticker)) {
-        favorites.push(ticker);
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        console.log(`Added ${ticker}`);
-        renderFavorites();
-      }
-    }
-
-    updateFavoriteButtonState();
-  });
-});
-
-function removeFromFavorites(ticker) {
-  const favorites = getFavorites();
-  const updated = favorites.filter((item) => item !== ticker);
-  localStorage.setItem("favorites", JSON.stringify(updated));
-  updateFavoriteButtonState();
-  renderFavorites();
-}
-
-function renderFavorites() {
-  const favorites = getFavorites();
-  const list = document.getElementById("favoritesList");
-  list.innerHTML = "";
-
-  favorites.forEach((ticker) => {
-    const li = document.createElement("li");
-    li.className =
-      "list-group-item d-flex justify-content-between align-items-center";
-
-    const span = document.createElement("span");
-    span.textContent = ticker;
-    span.style.cursor = "pointer";
-    span.addEventListener("click", () => {
-      const interval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
-      intradayData(ticker, interval);
-      tickerInput.value = ticker;
-      updateFavoriteButtonState();
-    });
-
-    li.appendChild(span);
-    // li.appendChild(removeBtn);
-    list.appendChild(li);
-  });
-}
-
-// Trigger state update when typing in input
-tickerInput.addEventListener("input", () => {
-  updateFavoriteButtonState();
-});
-
-// Initial render
-renderFavorites();
-updateFavoriteButtonState();
+// renderFavorites(
+//   favoritesList,
+//   tickerInput,
+//   () => {
+//     const interval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
+//     intradayData(tickerInput.value.trim().toUpperCase(), interval);
+//   },
+//   updateFavoriteButtonState
+// );
 
 // TOGGLE BEHAVIOR
 dateRangeContainer.style.display = "none";
@@ -289,35 +227,32 @@ toggleDateRangeBtn.addEventListener("click", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  // === Date and Volume sorting function
-  if (dateHeader) {
-    dateHeader.addEventListener("click", sortTableByDate);
+  // Sorting
+  if (dateHeader) dateHeader.addEventListener("click", sortTableByDate);
+  if (volumeHeader) volumeHeader.addEventListener("click", sortTableByVolume);
+
+  initThemeToggle();
+
+  // Keep favorite icon updated as user types
+  tickerInput.addEventListener("input", () => {
+    updateFavoriteButtonState(tickerInput, addFavoriteButton);
+  });
+
+  // Function to fetch intraday data for current slider value
+  function fetchCurrentIntervalData() {
+    const interval = intervals[parseInt(sliderInterval.value, 10)] || "15m";
+    intradayData(tickerInput.value.trim().toUpperCase(), interval);
   }
 
-  if (volumeHeader) {
-    volumeHeader.addEventListener("click", sortTableByVolume);
-  }
+  // Initial favorite button state + render
+  updateFavoriteButtonState(tickerInput, addFavoriteButton);
 
-  // === Theme toggle ===
-  const toggleBtn = document.getElementById("themeToggle");
-  if (toggleBtn) {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    document.documentElement.setAttribute("data-bs-theme", savedTheme);
-    toggleBtn.innerHTML =
-      savedTheme === "dark"
-        ? '<i class="bi bi-sun"></i>'
-        : '<i class="bi bi-moon"></i>';
-
-    toggleBtn.addEventListener("click", () => {
-      const currentTheme =
-        document.documentElement.getAttribute("data-bs-theme");
-      const newTheme = currentTheme === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-bs-theme", newTheme);
-      localStorage.setItem("theme", newTheme);
-      toggleBtn.innerHTML =
-        newTheme === "dark"
-          ? '<i class="bi bi-sun"></i>'
-          : '<i class="bi bi-moon"></i>';
-    });
-  }
+  toggleFavorites(tickerInput, addFavoriteButton, () => {
+    renderFavorites(
+      favoritesList,
+      tickerInput,
+      fetchCurrentIntervalData,
+      updateFavoriteButtonState
+    );
+  });
 });

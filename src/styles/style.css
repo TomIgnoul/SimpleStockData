@@ -117,8 +117,6 @@ html {
   border: 1px solid var(--bs-border-color-translucent);
   background-color: var(--bs-body-bg) !important;
   color: var(--bs-body-color);
-  /* background: #f1f1f1 !important; */
-  /* border: 1px solid grey; */
 }
 
 .SearchAndFavorites input:focus {
@@ -148,14 +146,13 @@ html {
   float: left;
   width: 20%;
   padding: 7px;
-  background-color: var(--bs-body-bg);
-  color: var(--bs-body-color);
   font-size: 17px;
+  background-color: var(--bs-body-bg) !important;
+  color: var(--bs-body-color);
   border: 1px solid var(--bs-border-color-translucent);
+  border-radius: 0 !important;
   border-right: none;
   cursor: pointer;
-  border-radius: 0px !important ;
-  /* background: #f1f1f1; */
 }
 
 /* ========================
