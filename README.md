@@ -18,9 +18,9 @@ De gegevens uit de grafiek worden ook weergegeven in een tabel. De gebruiker hee
 - Donkere modus ondersteuning
 - Interval- en range-slider voor intraday & historische data
 
-## Documentation
+# Technische vereisten
 
-[Documentation](https://linktodocumentation)
+## 1. DOM manipulatie:
 
 ### Elementen selecteren
 
@@ -48,7 +48,7 @@ Bijvoorbeeld:
 
 ---
 
-# Modern JavaScript
+## 2. Modern JavaScript
 
 ### Gebruik van constanten
 
@@ -60,48 +60,100 @@ Zie: `src/main.js`, lijn 36–55
 ### Template literates
 
 Zie: doorheen het volledige project
-Bijvoorbeeld: `src/utils/populateStockTable.js`, lijn 13-18
 
-**Iteratie over arrays:**
+- Bijvoorbeeld: `src/utils/populateStockTable.js`, lijn 13-18
+
+### Iteratie over Arrays
+
 forEach methode wordt gebruikt om dynamisch DOM-elementen te generen op basis van de inhoud van de favorites array.
 forEach methode wordt gebruikt om te itereren en functionaliteiten te koppelen aan de aanwezige items in de chartTypeToggle dropdown menu.
 
 Zie:
--'src/ui/favorites.js', lijn 71
--'src/ui/chartTypeToggle.js', lijn 6
 
-**Array methodes:**
+-`src/ui/favorites.js`, lijn 71
+
+-`src/ui/chartTypeToggle.js`, lijn 6
+
+### Array methodes
 
 zie:  
- -'src/ui/favorites.js', lijn 5, function updateFavoriteButtonState
--'src/ui/favorites.js', lijn 19, function toggleFavorites
--'src/ui/favorites.js', lijn 43, function removeFromFavorites
--'src/utils/sortTableByDate.js', lijn 8, 24, function sortTableByVolume & sortTableByDate
+-`src/ui/favorites.js`, lijn 5, function updateFavoriteButtonState
 
-**Arrow functions:**
-Zie doorheen het hele project.
+-`src/ui/favorites.js`, lijn 19, function toggleFavorites
 
-**Conditional (ternary) operator:**
-Zie: src/ui/themeToggle.js lijn 10 & 11, 21 & 22
+-`src/ui/favorites.js`, lijn 43, function removeFromFavorites
 
-**Callback functions:**
+-`src/utils/sortTableByDate.js`, lijn 8, 24, function sortTableByVolume & sortTableByDate
+
+### Arrow Functions
+
+Gebruikt doorheen het hele project.
+
+### Conditional (ternary) operator:
+
+Zie:
+
+- src/ui/themeToggle.js lijn 10 & 11, 21 & 22
+
+### Callback functions
+
 In het project worden callback functies gebruikt voor het uitvoeren van logica na bepaalde events.
 Bijvoorbeeld bij het toevoegen/verwijderen van favorieten en het ophalen van gegevens bij het klikken op een opgeslagen ticker
-Zie: src/main/main.js, lijn 91 & 99
 
-Promises
-Async & Await
-Observer API (1 is voldoende)
-Data & API:  
- Fetch om data op te halen
-JSON manipuleren en weergeven
-Opslag & validatie:  
- Formulier validatie
-Gebruik van LocalStorage
-Styling & layout:  
- Basis HTML layout
-Basis CSS
-Gebruiksvriendelijke elementen (verwijderknoppen, icoontjes,...)
-Tooling & structuur:
-Project is opgezet met Vite
-Een correcte folderstructuur wordt aangehouden (gescheiden html, css en js files, src folder, dist folder, ...)
+- `src/main/main.js`, lijn 91, lijn 99
+- `src/ui/favorites.js`, lijn 19, lijn 71
+
+### Promises
+
+- zie fetch() in `src/init/intraDay.js` en `src/init/dateRangeData.js`
+
+### Async & Await
+
+- `src/init/intraDay.js`
+
+- `src/init/dateRangeData.js`
+
+### Observer API
+
+## 3. Data & API
+
+### Fetch
+
+Wordt gebruikt om asynchroon data op te halen van een externe API.
+
+zie:
+
+- `src/init/intradayData.js`
+
+- `src/init/dateRangeData.js`
+
+### JSON maniupleren en weergeven
+
+JSON-data die wordt opgehaald door Fetch() wordt omgezet via een functie transformToChart() om deze bruikbaar te maken voor de grafiek en tabellen.
+
+- `src/utils/transformChartData.js`
+- `src/utils/populateStockTable.js`
+
+## 4. Opslag & validatie
+
+### Formulier validatie
+
+Er is momenteel geen klassiek formulier validatie. Wel wordt er input gevalideerd input gevalideerd in functie van de API-oproepen
+
+- `src/utils/validateParams.js`
+
+### Gebruik van LocalStorage
+
+LocalStorage wordt gebruikt om favorites lokaal op te slaan:
+
+- `src/ui/favorites.js`
+
+## 5. Styling & layout
+
+- [x] Basis HTML & CSS layout
+- [x] Gebruiksvriendelijke elementen
+
+## 6. Tooling & structuur
+
+project is opgezet met Vite en er werd aandacht besteed
+aan de folderstructuur om alles zo modulair en onderhoudsvriendelijk mogelijk te houden.
