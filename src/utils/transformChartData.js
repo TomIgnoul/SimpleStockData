@@ -1,7 +1,5 @@
-// src/utils/transformChartData.js
 "use strict";
 
-//This funcion is used by renderChartByType in ../main/main.js
 export function transformToChart(dataArray, label = "Price") {
   if (!Array.isArray(dataArray) || dataArray.length === 0) {
     return { labels: [], values: [], label };

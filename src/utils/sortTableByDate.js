@@ -11,7 +11,7 @@ export function sortTableByDate() {
     return sortAscending ? dateA - dateB : dateB - dateA;
   });
 
-  sortAscending = !sortAscending; // wissel richting
+  sortAscending = !sortAscending;
   populateStockTable(sorted);
 }
 
@@ -27,6 +27,6 @@ export function sortTableByVolume() {
     return sortAscending ? volumeA - volumeB : volumeB - volumeA;
   });
 
-  sortAscending = !sortAscending; // wissel richting
+  sortAscending = !sortAscending;
   populateStockTable(sorted);
 }
