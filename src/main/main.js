@@ -13,6 +13,8 @@ import {
   sortTableByDate,
 } from "../utils/sortTableByDate.js";
 
+import { intervals } from "../ui/sliderControls.js";
+
 // UI Modules
 import { initThemeToggle } from "../ui/themeToggle.js";
 import { initChartTypeToggle } from "../ui/chartTypeToggle.js";

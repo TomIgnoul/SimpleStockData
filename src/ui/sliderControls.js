@@ -4,6 +4,8 @@ import { intradayData } from "../init/intradayData";
 import { dateRangeData } from "../init/dateRangeData";
 import { debounce } from "../utils/debounce";
 
+export const intervals = ["1m", "5m", "15m", "30m", "60m"];
+
 export function initSliderControls({
   sliderInterval,
   sliderDateRanges,
