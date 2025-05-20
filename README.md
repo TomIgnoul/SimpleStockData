@@ -28,7 +28,7 @@ Zie: `src/main.js`, lijn 36–55
 
 - `document.getElementById(...)`, `querySelector(...)`
 
-### Elementen manipuleren
+### a. Elementen manipuleren
 
 Zie:
 
@@ -37,7 +37,7 @@ Zie:
 - `src/utils/renderBarChart.js`
 - Bijvoorbeeld: dynamisch toevoegen van grafieken, aanpassen van tabellen
 
-### Events koppelen aan elementen
+### b. Events koppelen aan elementen
 
 Bijvoorbeeld:
 
@@ -50,20 +50,20 @@ Bijvoorbeeld:
 
 ## 2. Modern JavaScript
 
-### Gebruik van constanten
+### a. Gebruik van constanten
 
 Zie: `src/main.js`, lijn 36–55
 
 - `const chartIcon = document.getElementById("chartIcon");`
 - `...`
 
-### Template literates
+### b. Template literates
 
 Zie: doorheen het volledige project
 
 - Bijvoorbeeld: `src/utils/populateStockTable.js`, lijn 13-18
 
-### Iteratie over Arrays
+### c. Iteratie over Arrays
 
 forEach methode wordt gebruikt om dynamisch DOM-elementen te generen op basis van de inhoud van de favorites array.
 forEach methode wordt gebruikt om te itereren en functionaliteiten te koppelen aan de aanwezige items in de chartTypeToggle dropdown menu.
@@ -74,7 +74,7 @@ Zie:
 
 -`src/ui/chartTypeToggle.js`, lijn 6
 
-### Array methodes
+### d. Array methodes
 
 zie:  
 -`src/ui/favorites.js`, lijn 5, function updateFavoriteButtonState
@@ -85,17 +85,17 @@ zie:
 
 -`src/utils/sortTableByDate.js`, lijn 8, 24, function sortTableByVolume & sortTableByDate
 
-### Arrow Functions
+### e. Arrow Functions
 
 Gebruikt doorheen het hele project.
 
-### Conditional (ternary) operator:
+### f. Conditional (ternary) operator:
 
 Zie:
 
 - src/ui/themeToggle.js lijn 10 & 11, 21 & 22
 
-### Callback functions
+### g. Callback functions
 
 In het project worden callback functies gebruikt voor het uitvoeren van logica na bepaalde events.
 Bijvoorbeeld bij het toevoegen/verwijderen van favorieten en het ophalen van gegevens bij het klikken op een opgeslagen ticker
@@ -103,17 +103,17 @@ Bijvoorbeeld bij het toevoegen/verwijderen van favorieten en het ophalen van geg
 - `src/main/main.js`, lijn 91, lijn 99
 - `src/ui/favorites.js`, lijn 19, lijn 71
 
-### Promises
+### h. Promises
 
 - zie fetch() in `src/init/intraDay.js` en `src/init/dateRangeData.js`
 
-### Async & Await
+### i. Async & Await
 
 - `src/init/intraDay.js`
 
 - `src/init/dateRangeData.js`
 
-### Observer API
+### j. Observer API
 
 Er wordt gebruikt gemaakt van een Observer-API om de tabel te
 
@@ -123,7 +123,7 @@ zie:
 
 ## 3. Data & API
 
-### Fetch
+### a. Fetch
 
 Wordt gebruikt om asynchroon data op te halen van een externe API.
 
@@ -133,7 +133,7 @@ zie:
 
 - `src/init/dateRangeData.js`
 
-### JSON maniupleren en weergeven
+### b. JSON maniupleren en weergeven
 
 JSON-data die wordt opgehaald door Fetch() wordt omgezet via een functie transformToChart() om deze bruikbaar te maken voor de grafiek en tabellen.
 
@@ -142,13 +142,13 @@ JSON-data die wordt opgehaald door Fetch() wordt omgezet via een functie transfo
 
 ## 4. Opslag & validatie
 
-### Formulier validatie
+### a. Formulier validatie
 
-Er is momenteel geen klassiek formulier validatie. Wel wordt er input gevalideerd input gevalideerd in functie van de API-oproepen
+Er is momenteel geen klassieke formulier validatie. Wel wordt er user input gevalideerd in functie van de API-oproepen
 
 - `src/utils/validateParams.js`
 
-### Gebruik van LocalStorage
+### b. Gebruik van LocalStorage
 
 LocalStorage wordt gebruikt om favorites lokaal op te slaan:
 
