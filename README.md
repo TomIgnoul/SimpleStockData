@@ -158,6 +158,61 @@ LocalStorage wordt gebruikt om favorites lokaal op te slaan:
 
 - [x] Basis HTML & CSS layout
 - [x] Gebruiksvriendelijke elementen
+- [ ] 
+
+# Deployment
+
+## Install python (voor de API)
+**🐧 Linux**
+```bash
+sudo apt install python3 python3-pip -y
+```
+**🍎 Mac**
+
+Sla deze stap over als je brew nog al hebt geinstalleerd op je machine:
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Installeer Python via Homebrew
+```bash
+brew install python
+```
+**🪟 Windows**
+
+1. Download de installer:
+
+- https://www.python.org/downloads/windows/
+
+2. Voer de installer uit
+
+## Installatie virtuele omgeving & Flask
+
+**Linux & Mac**
+
+venv:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+Flask:
+```bash
+pip install Flask
+```
+
+
+**windows**
+
+venv:
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
+
+Flask:
+```powershell
+pip install Flask
+```
 
 ## 6. Tooling & structuur
 
