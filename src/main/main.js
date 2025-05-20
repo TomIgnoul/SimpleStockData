@@ -4,9 +4,9 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 // Utils
-import { transformToChart } from "../utils/transformChartData";
-import { renderLineChart } from "../utils/renderLineChart";
-import { renderBarChart } from "../utils/renderBarChart";
+// import { transformToChart } from "../utils/transformChartData";
+// import { renderLineChart } from "../utils/renderLineChart";
+// import { renderBarChart } from "../utils/renderBarChart";
 import { renderChartByType } from "../utils/chartRenderer.js";
 import {
   sortTableByVolume,
@@ -55,6 +55,8 @@ const searchButton = document.getElementById("btntickerTextBox");
 
 const dateHeader = document.getElementById("dateHeader");
 const volumeHeader = document.getElementById("volumeHeader");
+
+const stockTable = document.getElementById("table");
 
 // --- Search Button ---
 searchButton.addEventListener("click", () => {
@@ -124,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     intervalContainer,
     dateRangeContainer,
     tickerInput,
+    stockTableEl: stockTable,
   });
 
   // Table sort
