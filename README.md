@@ -119,7 +119,7 @@ Er wordt gebruikt gemaakt van een Observer-API om de tabel te
 
 zie:
 
-- `src/ui/sliderControls.js`, lijn 120
+- `src/ui/sliderControls.js`, lijn 110
 
 ## 3. Data & API
 
