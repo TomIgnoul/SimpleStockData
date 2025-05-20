@@ -158,7 +158,12 @@ LocalStorage wordt gebruikt om favorites lokaal op te slaan:
 
 - [x] Basis HTML & CSS layout
 - [x] Gebruiksvriendelijke elementen
-- [ ] 
+
+## 6. Tooling & structuur
+
+project is opgezet met Vite en er werd aandacht besteed
+aan de folderstructuur om alles zo modulair en onderhoudsvriendelijk mogelijk te houden.
+
 
 # Deployment
 
@@ -214,7 +219,3 @@ Flask:
 pip install Flask
 ```
 
-## 6. Tooling & structuur
-
-project is opgezet met Vite en er werd aandacht besteed
-aan de folderstructuur om alles zo modulair en onderhoudsvriendelijk mogelijk te houden.
