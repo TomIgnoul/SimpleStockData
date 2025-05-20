@@ -115,6 +115,12 @@ Bijvoorbeeld bij het toevoegen/verwijderen van favorieten en het ophalen van geg
 
 ### Observer API
 
+Er wordt gebruikt gemaakt van een Observer-API om de tabel te
+
+zie:
+
+- `src/ui/sliderControls.js`, lijn 120
+
 ## 3. Data & API
 
 ### Fetch
