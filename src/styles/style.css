@@ -267,7 +267,7 @@ canvas#chartCanvas {
   flex-direction: column;
   background-color: var(--bs-body-bg);
   overflow-x: auto;
-  min-height: 600px;
+  min-height: 1200px;
 }
 
 #table {
@@ -340,4 +340,23 @@ input {
 
 #themeToggle {
   color: var(--bs-body-color);
+}
+
+/* ========================
+  Fade-in feature for StockTable
+======================== */
+/* Algemene fade-in klasse */
+.fade-in-visible {
+  animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

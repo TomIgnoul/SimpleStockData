@@ -16,6 +16,7 @@ export function initSliderControls({
   intervalContainer,
   dateRangeContainer,
   tickerInput,
+  stockTableEl,
 }) {
   const intervals = ["1m", "5m", "15m", "30m", "60m"];
   const dateRanges = {
@@ -106,6 +107,19 @@ export function initSliderControls({
   });
   intervalContainer.style.display = "block";
   dateRangeContainer.style.display = "none";
+
+  if (stockTableEl) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          stockTableEl.classList.add("fade-in-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+
+    observer.observe(stockTableEl);
+  }
   showIntervalBtn();
   showIntervalMode();
 }
