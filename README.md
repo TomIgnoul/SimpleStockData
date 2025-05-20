@@ -15,7 +15,7 @@ De gegevens uit de grafiek worden ook weergegeven in een tabel. De gebruiker hee
 - Zoeken op aandelen-ticker
 - Toevoegen/verwijderen van favorieten (localStorage)
 - Keuze tussen lijngrafiek of staafgrafiek
-- Donkere modus ondersteuning
+- Themaswitcher
 - Interval- en range-slider voor intraday & historische data
 
 # Technische vereisten
