@@ -18,6 +18,17 @@ De gegevens uit de grafiek worden ook weergegeven in een tabel. De gebruiker hee
 - Themaswitcher
 - Interval- en range-slider voor intraday & historische data
 
+## gebruikte API
+
+- [Yahoo Finance via yfinance](https://pypi.org/project/yfinance/)
+
+## Screenshots
+
+zie:
+
+- Zie screenshots in [`docs/screenshots/`](docs/screenshots/)
+- ![landingpage](docs/screenshots/1.Landingpage.png)
+
 # Technische vereisten
 
 ## 1. DOM manipulatie:
@@ -59,7 +70,7 @@ Zie: `src/main.js`, lijn 36–55
 
 ### b. Template literates
 
-Zie: doorheen het volledige project
+Zie: doorheen het volledige project.
 
 - Bijvoorbeeld: `src/utils/populateStockTable.js`, lijn 13-18
 
@@ -98,7 +109,7 @@ Zie:
 ### g. Callback functions
 
 In het project worden callback functies gebruikt voor het uitvoeren van logica na bepaalde events.
-Bijvoorbeeld bij het toevoegen/verwijderen van favorieten en het ophalen van gegevens bij het klikken op een opgeslagen ticker
+Bijvoorbeeld bij het toevoegen/verwijderen van favorieten en het ophalen van gegevens bij het klikken op een opgeslagen ticker.
 
 - `src/main/main.js`, lijn 91, lijn 99
 - `src/ui/favorites.js`, lijn 19, lijn 71
@@ -115,7 +126,7 @@ Bijvoorbeeld bij het toevoegen/verwijderen van favorieten en het ophalen van geg
 
 ### j. Observer API
 
-Er wordt gebruikt gemaakt van een Observer-API om de tabel te
+Er wordt gebruikt gemaakt van een Observer-API op de tabel.
 
 zie:
 
@@ -144,7 +155,7 @@ JSON-data die wordt opgehaald door Fetch() wordt omgezet via een functie transfo
 
 ### a. Formulier validatie
 
-Er is momenteel geen klassieke formulier validatie. Wel wordt er user input gevalideerd in functie van de API-oproepen
+Er is momenteel geen klassieke formulier validatie. Wel wordt er user input gevalideerd in functie van de API-oproepen.
 
 - `src/utils/validateParams.js`
 
@@ -161,122 +172,104 @@ LocalStorage wordt gebruikt om favorites lokaal op te slaan:
 
 ## 6. Tooling & structuur
 
-project is opgezet met Vite en er werd aandacht besteed
+Project is opgezet met Vite en er werd aandacht besteed
 aan de folderstructuur om alles zo modulair en onderhoudsvriendelijk mogelijk te houden.
-
 
 # Deployment
 
-## ⚡ Quick Setup 
+## Setup
+
 ```bash
 git clone https://github.com/TomIgnoul/SimpleStockData.git
 cd SimpleStockData
-python3 -m venv venv && source venv/bin/activate && pip install Flask
+```
+
+## Start de backend
+
+**🐧 Linux / 🍎 macOS**
+
+```
+chmod +x setup_backend.sh
+./setup_backend.sh
+```
+
+**🪟 Windows (cmd of Powershell)**
+
+```
+setup_backend.bat
+```
+
+## Start de frontend
+
+Open een tweede terminal en voer uit:
+
+```
 npm install
-./start_api.sh    # of: WindowsStart_api.bat
 npm run dev
 ```
 
-## Full Setup
-## Installeer Python, Venv en Flask (voor de API)
-**🐧 Linux**
-```bash
+De frontend draait op:
+
+- http://localhost:5173
+
+## Vereisten
+
+### Python
+
+- **linux**
+
+```
 sudo apt install python3 python3-pip -y
 ```
-**🍎 Mac**
 
-Sla deze stap over als je brew al hebt geinstalleerd op je machine:
-```bash
+- **macOS**
+
+```
+brew install python
+```
+
+Als brew nog niet geinstalleerd is op je machine voer dan het volgende uit:
+
+```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Installeer Python via Homebrew
-```bash
-brew install python
+- **Windows**
+
+Download en installeer via: https://www.python.org/downloads/windows/
+
+### Node.js + npm
+
+- **linux**
+
 ```
-**🪟 Windows**
-
-1. Download de installer:
-
-- https://www.python.org/downloads/Windows/
-
-2. Voer de installer uit
-
-## 🟡 NodeJS + npm
-**Linux:**  ```sudo apt install nodejs npm```
-
-**Mac:** ```brew install node```  
-
-**Windows:** Download & installeer Node.js van: https://nodejs.org/
-
-## 🟡 Installatie virtuele omgeving & Flask
-
-**Linux & Mac**
-
-venv:
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-Flask:
-```bash
-pip install Flask
+sudo apt install nodejs npm
 ```
 
-**Windows**
+- **macOS**
 
-venv:
-```powershell
-python -m venv venv
-venv\Scripts\activate
+```
+brew install node
 ```
 
-Flask:
-```powershell
-pip install Flask
-```
+- **Windows**
+  Download en installeer via: https://nodejs.org/
 
+# Bijdragen
 
+Met dank aan [Jordy Schuermans](https://github.com/JordySchuermans) voor hulp bij het opzetten van de API en fetch-data features.
 
+# Bronnen
 
-## 🟡 Initialiseer de git repository
-
-**Linux / Mac / Windows**
-
-1. open de terminal / Git Bash
-2. Navigeer naar de folder waar je de installatie wil uitvoeren
-3. plak het volgende in de terminal: ```git clone https://github.com/TomIgnoul/SimpleStockData.git```
-
-4. Druk op enter
-
-## 🟡 Dependencies
-Voer ```npm install``` uit in de rootmap van ```SimpleStockData``` om alle benodigde dependencies te installeren
-
-## 🟡 Start de Applicatie
-### *API Script uitvoeren:*
-**Linux & Mac**
-
-1. Maak het script (eenmalig) uitvoerbaar ```chmod +x start_api.sh```
-
-2. Start de API met het voorziene script in de terminal:
-```bash
-./start_api.sh
-```
-
-
-**Windows**
-
-1. Start de API met het voorziene script in de terminal:
-```bash
-windowsStart_api.bat
-```
-
-### *Run vite*
-
-Open een tweede terminal en voer het volgende commando uit:
-```bash
-npm run dev
-```
-
-De applicatie wordt op de volgende locatie uitgevoerd:
-- http://localhost:5173/
+- [Flask](https://flask.palletsprojects.com/)
+- [yfinance op PyPI](https://pypi.org/project/yfinance/)
+- [Vite](https://vitejs.dev/)
+- [Chart.js voor de grafiek](https://www.chartjs.org/docs/latest/)
+- [Bootstrap](https://getbootstrap.com/)
+- [Mdn voor algemene concepten](https://developer.mozilla.org/en-US/)
+- [FreeCodeCamp voor Debounce function](https://www.freecodecamp.org/news/javascript-debounce-example/)
+- [geeksforgeeks: table sorting](https://www.geeksforgeeks.org/how-to-sort-rows-in-a-table-using-javascript/)
+- [Reactive chart canvas](https://codepen.io/chartjs/pen/YVWZbz)
+- [Readme inspiration](https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/)
+- [Readme execution](https://readme.so)
+- ChatGPT - overal coding companion ([GPT Chatlog PDF](docs/GPT_Chatlog.pdf))
