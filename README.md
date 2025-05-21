@@ -189,14 +189,14 @@ cd SimpleStockData
 **🐧 Linux / 🍎 macOS**
 
 ```
-chmod +x setup_backend.sh
-./setup_backend.sh
+chmod +x scripts/setup_backend.sh
+./scripts/setup_backend.sh
 ```
 
 **🪟 Windows (cmd of Powershell)**
 
 ```
-setup_backend.bat
+scripts\setup_backend.bat
 ```
 
 ## Start de frontend
