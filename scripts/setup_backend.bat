@@ -14,9 +14,9 @@ echo Activating virtual environment...
 call venv\Scripts\activate
 
 echo Installing dependencies from requirements.txt, this might take a minute...
-pip install -r backend/requirements.txt --progress-bar on --no-cache-dir
+pip install -r ..\backend\requirements.txt --progress-bar on --no-cache-dir
 
 echo Starting Flask API...
-set FLASK_APP=backend/stockdata.py
+set FLASK_APP=..\backend\stockdata.py
 set FLASK_ENV=development
 flask run --port=8080
