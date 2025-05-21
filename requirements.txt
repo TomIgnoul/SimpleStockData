@@ -1,0 +1,4 @@
+flask
+yfinance
+flask_cors
+pandas
