@@ -14,9 +14,9 @@ echo "Activating virtual environment..."
 source venv/bin/activate
 
 echo "⬇Installing dependencies, this might take a minute..."
-pip install -r requirements.txt --progress-bar on --no-cache-dir
+pip install -r backend/requirements.txt --progress-bar on --no-cache-dir
 
 echo "Starting Flask API..."
-export FLASK_APP=stockdata.py
+export FLASK_APP=backend/stockdata.py
 export FLASK_ENV=development
 flask run --port=8080
